@@ -1,0 +1,3 @@
+LIBRARY	model3d
+EXPORTS
+	mexFunction

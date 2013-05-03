@@ -1,0 +1,3 @@
+LIBRARY	serialize
+EXPORTS
+	mexFunction

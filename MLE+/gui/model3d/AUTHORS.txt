@@ -1,0 +1,2 @@
+Model3D matlab class by:
+Steven Michael (smichael@ll.mit.edu)
