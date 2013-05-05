@@ -18,19 +18,23 @@ else
     mlep.fontSmall = 10; % 8    
 end
 %% INITIALIZE NECESSARY VARIABLES
-mlepInit;
-mlep.data.MLEPSETTINGS = MLEPSETTINGS;
+% HomePath
+mlep.homePath = mfilename('fullpath');
+indexHome = strfind(mlep.homePath, ['gui' filesep 'mlep']);
+mlep.homePath = mlep.homePath(1:indexHome-1);
+
+% load MLEPSETTINGS
+var = load([mlep.homePath 'gui' filesep 'MLEPSETTINGS.mat']);
+mlep.data.MLEPSETTINGS = var.MLEPSETTINGS;
 if ispc
     mlep.data.MLEPSETTINGS.path = mlep.data.MLEPSETTINGS.env;
 end
 mlep.eplusPath = mlep.data.MLEPSETTINGS.path{1}{2};
-mlep.homePath = mfilename('fullpath');
-mlep.version1 = 1;
-mlep.version2 = 0;
 
-% Remove 
-indexHome = strfind(mlep.homePath, ['gui' filesep 'mlep']);
-mlep.homePath = mlep.homePath(1:indexHome-1);
+mlep.version1 = 1;
+mlep.version2 = 1;
+
+% BacnetDir 
 mlep.BACnetDir = [mlep.homePath 'bacnet-tools-0.7.1' filesep];
 
 %% SCREEN SIZE

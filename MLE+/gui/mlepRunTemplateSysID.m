@@ -30,6 +30,9 @@ function [time loginput logdata mlep] = mlepRunTemplateSysID(mlep)
 
 %% Create an mlepProcess instance and configure it
 mlep.data.stopSimulation = 0;
+mlep.data.noInput = 0;
+mlep.data.noOutput = 0;
+
 ep = mlepProcess; 
 % Remove .idf .epw 
 indexIdf = strfind(mlep.data.idfFile, '.idf');
@@ -72,6 +75,10 @@ mlepOutputVector = struct;
 for i = 1:size(mlep.data.inputTableData,1)
     mlepInputVector.(mlep.data.inputTableData{i,end}) = zeros(1,MAXSTEPS);
 end
+
+if size(mlep.data.outputTableData,1)
+    mlep.data.noOutput = 1;
+end
 for i = 1:size(mlep.data.outputTableData,1)
     mlepOutputVector.(mlep.data.outputTableData{i,end}) = zeros(1,MAXSTEPS);
 end
@@ -104,7 +111,6 @@ if ~isfield(mlep.data,'userdata')
     mlep.data.userdata = struct();
 end
 
-mlep.data.noInput = 0;
 %%
 mlepIn = [];
 mlepOut = [];
@@ -123,12 +129,14 @@ while kStep <= MAXSTEPS
         break;
     end
     
-    % Save to logdata
-    logdata(kStep, :) = outputs;
-    for i = 1:size(mlep.data.outputTableData,1)
-        mlepOutputVector.(mlep.data.outputTableData{i,end})(kStep) = outputs(i);
+    %% INPUTS EXIST
+    if mlep.data.noOutput
+        % Save to logdata
+        logdata(kStep, :) = outputs;
+        for i = 1:size(mlep.data.outputTableData,1)
+            mlepOutputVector.(mlep.data.outputTableData{i,end})(kStep) = outputs(i);
+        end
     end
-    
      
     % Define Previous Output Variables
     if size(mlep.data.outputTableData,1)

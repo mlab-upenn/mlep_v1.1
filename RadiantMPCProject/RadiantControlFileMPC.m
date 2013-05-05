@@ -44,7 +44,7 @@ if strcmp(cmd,'init')
     userdata.x.Plant = userdata.mpcobj.Model.Plant.c\y';
     
     %% REFERENCE TEMP
-    userdata.r = eplus_out_prev.heatSP(end)*ones(1,3);
+    %userdata.r = eplus_out_prev.heatSP(end)*ones(1,3);
     
     %% GENERATE INPUT 
     [input Info] = mpcmove(userdata.mpcobj,userdata.x,y,userdata.r,userdata.v);
@@ -80,7 +80,7 @@ elseif strcmp(cmd,'normal')
     %userdata = getPredictedValues(userdata,stepNumber);
     
     %% REFERENCE TEMP
-    userdata.r = eplus_out_prev.heatSP(end)*ones(1,3);
+    %userdata.r = eplus_out_prev.heatSP(end)*ones(1,3);
         
     %% GENERATE INPUT MPC
     if mod(stepNumber,userdata.Ts) == 1

@@ -130,7 +130,15 @@ end
 %% WEATHER FILE 
 function [mlep] = selectWeather(mlep)
 % Select idf file [mlep.data.MLEPSETTINGS.path{1}{2} '.', filesep, 'WeatherData']
-[FileName,PathName] = uigetfile('*.epw','Select EPW-file','.');
+weatherPath = mlep.data.MLEPSETTINGS.path{1}{2};
+
+if weatherPath(end) == filesep
+    weatherPath = [weatherPath 'WeatherData'];
+else
+    weatherPath = [weatherPath filesep 'WeatherData'];
+end
+    
+[FileName,PathName] = uigetfile('*.epw','Select EPW-file',weatherPath);
 mlep.data.weatherFile = FileName;
 mlep.data.weatherFullPath = [PathName FileName];
 % Update text box 

@@ -1,9 +1,14 @@
 function [mlep] = updateProjectPath(mlep)
 
 % IDF
-mlep.data.idfFullPath = [mlep.data.projectPath mlep.data.idfFile];
+if isfield(mlep.data, 'projectPath') && isfield(mlep.data, 'idfFile')
+    mlep.data.idfFullPath = [mlep.data.projectPath mlep.data.idfFile];
+end
 % WEATHER
-mlep.data.weatherFullPath = [mlep.eplusPath filesep 'WeatherData' filesep mlep.data.weatherFile];
+if isfield(mlep, 'eplusPath') && isfield(mlep.data, 'weatherFile')
+    mlep.data.weatherFullPath = [mlep.eplusPath filesep 'WeatherData' filesep mlep.data.weatherFile];
+end
 % CONTROL
-mlep.data.controlFullPath = [mlep.data.projectPath mlep.data.controlFileName];
+if isfield(mlep.data, 'projectPath') && isfield(mlep.data, 'controlFileName')
+    mlep.data.controlFullPath = [mlep.data.projectPath mlep.data.controlFileName];
 end

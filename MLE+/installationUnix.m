@@ -124,52 +124,6 @@ if isfield(handles.data,'eplusPathCheck')
 end
 guidata(hObject, handles);
 
-% --- Executes on button press in selectJavaDir.
-function selectJavaDir_Callback(hObject, eventdata, handles)
-% hObject    handle to selectJavaDir (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-if ispc
-    startPath = 'C:\';
-else
-    startPath = ['Applications' filesep];
-end
-
-[javaPath] = uigetdir(startPath,'Select Java\Bin Directory. (e.g. C:\Program Files\Java\jre1.6.0_22\bin)');
-if ischar(javaPath)
-    handles.data.javaPath = javaPath;
-    set(handles.JavaDirEdit, 'String', handles.data.javaPath, 'Background', 'g');
-    javaPath = handles.data.javaPath;
-    currPath = mfilename('fullpath');
-    % Remove
-    indexHome = strfind(currPath, 'installFunction');
-    currPath = currPath(1:indexHome-1);
-    save([currPath 'gui' filesep 'javaPath.mat'],'javaPath');
-end
-guidata(hObject, handles);
-
-function JavaDirEdit_Callback(hObject, eventdata, handles)
-% hObject    handle to JavaDirEdit (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of JavaDirEdit as text
-%        str2double(get(hObject,'String')) returns contents of JavaDirEdit as a double
-guidata(hObject, handles);
-
-% --- Executes during object creation, after setting all properties.
-function JavaDirEdit_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to JavaDirEdit (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-guidata(hObject, handles);
-
 % --- Executes on button press in selectEplusDir.
 function selectEplusDir_Callback(hObject, eventdata, handles)
 % hObject    handle to selectEplusDir (see GCBO)
@@ -183,7 +137,7 @@ else
     startPath = ['Applications' filesep];
 end
 
-[eplusPath] = uigetdir(startPath,'Select EnergyPlus Directory. (e.g. C:\EnergyPlusV7-2-0)');
+[eplusPath] = uigetdir(startPath,'Select EnergyPlus Directory. (e.g. /Applications/EnergyPlusV7-2-0/)');
 if ischar(eplusPath)
     handles.data.eplusPath = eplusPath;
     set(handles.EplusDirEdit, 'String', handles.data.eplusPath, 'Background', 'g');
@@ -196,6 +150,7 @@ if ischar(eplusPath)
     indexHome = strfind(currPath, 'installFunction');
     currPath = currPath(1:indexHome-1);
     save([currPath 'gui' filesep 'eplusPath.mat'],'eplusPath');
+    saveMlepSettings();
 end
 % Update handles structure
 guidata(hObject, handles);
