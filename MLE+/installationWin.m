@@ -200,6 +200,7 @@ if ischar(eplusPath)
     indexHome = strfind(currPath, 'installFunction');
     currPath = currPath(1:indexHome-1);
     save([currPath 'gui' filesep 'eplusPath.mat'],'eplusPath');
+    saveMlepSettings();
 end
 % Update handles structure
 guidata(hObject, handles);
