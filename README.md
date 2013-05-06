@@ -37,8 +37,7 @@ If you have any questions or comments, please contact the authors.
 Willy Bernal 
 - willyg@seas.upenn.edu
 
-Truong Nghiem
-- nghiem@seas.upenn.edu
+[Truong Nghiem](http://www.seas.upenn.edu/~nghiem)
 
 Madhur Behl
 
