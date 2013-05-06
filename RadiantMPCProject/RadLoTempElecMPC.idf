@@ -114,7 +114,7 @@
 ! Environmental Emissions:        None
 ! Utility Tariffs:                None
 
-  Version,7.2;
+  Version,8.0;
 
 !-   ===========  ALL OBJECTS IN CLASS: SIMULATIONCONTROL ===========
 
@@ -181,7 +181,7 @@
     -17.3,                   !- Maximum Dry-Bulb Temperature {C}
     0.0,                     !- Daily Dry-Bulb Temperature Range {deltaC}
     ,                        !- Dry-Bulb Temperature Range Modifier Type
-    ,                        !- Dry-Bulb Temperature Range Modifier Schedule Name
+    ,                        !- Dry-Bulb Temperature Range Modifier Day Schedule Name
     Wetbulb,                 !- Humidity Condition Type
     -17.3,                   !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
     ,                        !- Humidity Condition Day Schedule Name
@@ -211,7 +211,7 @@
     31.5,                    !- Maximum Dry-Bulb Temperature {C}
     10.7,                    !- Daily Dry-Bulb Temperature Range {deltaC}
     ,                        !- Dry-Bulb Temperature Range Modifier Type
-    ,                        !- Dry-Bulb Temperature Range Modifier Schedule Name
+    ,                        !- Dry-Bulb Temperature Range Modifier Day Schedule Name
     Wetbulb,                 !- Humidity Condition Type
     10,                      !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
     ,                        !- Humidity Condition Day Schedule Name
@@ -2271,6 +2271,10 @@
 
 !-   ===========  ALL OBJECTS IN CLASS: CHILLER:ELECTRIC ===========
 
+ Output:PreprocessorMessage,Conversion 7.2 => 8.0,Warning,
+Chiller:Electric="Big Chiller",
+ defaults for this object have changed. Results may be different than previous. See ,
+InputOutputReference document for details.;
   Chiller:Electric,
     Big Chiller,             !- Name
     WaterCooled,             !- Condenser Type
@@ -2298,10 +2302,14 @@
     0.6852,                  !- Coefficient 2 of Full Load Ratio Curve
     0.2818,                  !- Coefficient 3 of Full Load Ratio Curve
     5,                       !- Chilled Water Outlet Temperature Lower Limit {C}
-    VariableFlow;            !- Chiller Flow Mode
+    LeavingSetpointModulated;!- Chiller Flow Mode
 
 !-   ===========  ALL OBJECTS IN CLASS: CHILLER:CONSTANTCOP ===========
 
+ Output:PreprocessorMessage,Conversion 7.2 => 8.0,Warning,
+Chiller:ConstantCOP="Little Chiller",
+ defaults for this object have changed. Results may be different than previous. See ,
+InputOutputReference document for details.;
   Chiller:ConstantCOP,
     Little Chiller,          !- Name
     25000,                   !- Nominal Capacity {W}
@@ -2313,7 +2321,7 @@
     Little Chiller Condenser Inlet Node,  !- Condenser Inlet Node Name
     Little Chiller Condenser Outlet Node,  !- Condenser Outlet Node Name
     WaterCooled,             !- Condenser Type
-    VariableFlow,            !- Chiller Flow Mode
+    LeavingSetpointModulated,!- Chiller Flow Mode
     ;                        !- Sizing Factor
 
 !-   ===========  ALL OBJECTS IN CLASS: DISTRICTCOOLING ===========
