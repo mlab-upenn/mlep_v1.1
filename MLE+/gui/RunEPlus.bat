@@ -33,7 +33,7 @@
  set program_path=%~dp0
  set program_name=EnergyPlus.exe
  set input_path=ExampleFiles\
- set output_path=ExampleFiles\Output\
+ set output_path=ExampleFiles\Outputs\
  : If called with full path to an existing file, clear these variables since
  : the first parameter is enough to locate the file 
  : MLE+ MODIFIED 1
@@ -102,6 +102,7 @@ IF EXIST eplustbl.csv   DEL eplustbl.csv
 IF EXIST eplustbl.txt   DEL eplustbl.txt
 IF EXIST eplustbl.tab   DEL eplustbl.tab
 IF EXIST eplustbl.htm   DEL eplustbl.htm
+IF EXIST eplustbl.xml   DEL eplustbl.xml
 IF EXIST eplusout.log   DEL eplusout.log
 IF EXIST eplusout.svg   DEL eplusout.svg
 IF EXIST eplusout.shd   DEL eplusout.shd
@@ -178,6 +179,7 @@ IF EXIST "%output_path%%~1Table.tab" DEL "%output_path%%~1Table.tab"
 IF EXIST "%output_path%%~1Table.txt" DEL "%output_path%%~1Table.txt"
 IF EXIST "%output_path%%~1Table.html" DEL "%output_path%%~1Table.html"
 IF EXIST "%output_path%%~1Table.htm" DEL "%output_path%%~1Table.htm"
+IF EXIST "%output_path%%~1Table.xml" DEL "%output_path%%~1Table.xml"
 IF EXIST "%output_path%%~1DElight.in" DEL "%output_path%%~1DElight.in"
 IF EXIST "%output_path%%~1DElight.out" DEL "%output_path%%~1DElight.out"
 IF EXIST "%output_path%%~1DElight.dfdmp" DEL "%output_path%%~1DElight.dfdmp"
@@ -342,6 +344,7 @@ IF EXIST eplusout.bnd %post_proc%HVAC-Diagram.exe
  IF EXIST eplustbl.tab MOVE eplustbl.tab "%output_path%%~1Table.tab"
  IF EXIST eplustbl.txt MOVE eplustbl.txt "%output_path%%~1Table.txt"
  IF EXIST eplustbl.htm MOVE eplustbl.htm "%output_path%%~1Table.html"
+ IF EXIST eplustbl.xml MOVE eplustbl.xml "%output_path%%~1Table.xml"
  IF EXIST eplusout.delightin MOVE eplusout.delightin "%output_path%%~1DElight.in"
  IF EXIST eplusout.delightout  MOVE eplusout.delightout "%output_path%%~1DElight.out"
  IF EXIST eplusout.delighteldmp  MOVE eplusout.delighteldmp "%output_path%%~1DElight.eldmp"
@@ -357,8 +360,8 @@ IF EXIST eplusout.bnd %post_proc%HVAC-Diagram.exe
  IF EXIST eplusout.dfs MOVE eplusout.dfs "%output_path%%~1DFS.csv"
  : MLE+ MODIFICATION 2
  : if exist *.mat (
- :  set matp=%~n1
- :  for /f %%x IN ('dir /b *.mat') DO call :s_sub %%x
+ :   set matp=%~n1
+ :   for /f %%x IN ('dir /b *.mat') DO call :s_sub %%x
  : )
  goto :cleanup
 
@@ -378,7 +381,7 @@ IF EXIST eplusout.bnd %post_proc%HVAC-Diagram.exe
  IF EXIST sqlite.err  DEL sqlite.err
  IF EXIST utilSocket.log   MOVE utilSocket.log testsocket.log
  : Delete FMUs files and folder -- added for FMI
- : MLE+ MODIFIED 2
+ : MLE+ MODIFICATION 3
  : IF EXIST *.mat DEL *.mat 
  IF EXIST *.fmu DEL *.fmu 
  IF EXIST tmp-fmus rmdir tmp-fmus /Q/S
