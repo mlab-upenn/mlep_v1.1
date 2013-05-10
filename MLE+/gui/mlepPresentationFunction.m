@@ -129,6 +129,10 @@ end
 
 %% WEATHER FILE 
 function [mlep] = selectWeather(mlep)
+% load MLEPSETTINGS
+var = load([mlep.homePath 'gui' filesep 'MLEPSETTINGS.mat']);
+mlep.data.MLEPSETTINGS = var.MLEPSETTINGS;
+
 % Select idf file [mlep.data.MLEPSETTINGS.path{1}{2} '.', filesep, 'WeatherData']
 weatherPath = mlep.data.MLEPSETTINGS.path{1}{2};
 
