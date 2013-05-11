@@ -108,3 +108,13 @@ legend('Heat SP', 'Cool SP', 'Outdoor', 'Zone');
 title('Temperatures');
 xlabel('Time (hour)');
 ylabel('Temperature (C)');
+
+
+% ==========FLAGS==============
+% Flag	Description
+% +1	Simulation reached end time.
+% 0	    Normal operation.
+% -1	Simulation terminated due to an unspecified error.
+% -10	Simulation terminated due to an error during the initialization.
+% -20	Simulation terminated due to an error during the time integration.
+

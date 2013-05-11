@@ -43,7 +43,7 @@
 ! Detached Shading:               None
 ! Daylight:                       None
 ! Natural Ventilation:            None
-! Compact Schedules:              Yes
+! Compact Schedules:              yes
 !
 ! HVAC:                           Each zone (basement is unconditioned but has a heat source) is
 !                                 served by a packaged single zone system consisting of an outside
@@ -56,21 +56,25 @@
 ! System Equipment Autosize:      No
 ! Purchased Cooling:              None
 ! Purchased Heating:              None
-! Coils:                          COIL:DX:CoolingBypassFactorEmpirical, COIL:Gas:Heating
+! Coils:                          Coil:Cooling:DX:SingleSpeed, Coil:Heating:Gas
 ! Pumps:                          None
 ! Boilers:                        None
 ! Chillers:                       None
 !
 ! Results:
-! Standard Reports:               None
+! Standard Reports:               All Summary Predefined Reports
 ! Timestep or Hourly Variables:   Hourly
 ! Time bins Report:               None
-! HTML Report:                    None
+! HTML Report:                    Predefined All Summary
 ! Environmental Emissions:        None
 ! Utility Tariffs:                None
 
   Version,8.0;
+  
+  ExternalInterface,
+    PtolemyServer;           !- Name of External Interface
 
+  
   Building,
     Building,                !- Name
     0,                       !- North Axis {deg}
@@ -81,17 +85,13 @@
     25,                      !- Maximum Number of Warmup Days
     6;                       !- Minimum Number of Warmup Days
 
+  Timestep,4;
+
   SurfaceConvectionAlgorithm:Inside,Simple;
 
   SurfaceConvectionAlgorithm:Outside,SimpleCombined;
 
   HeatBalanceAlgorithm,ConductionTransferFunction;
-
-  ZoneCapacitanceMultiplier:ResearchSpecial,
-    1,                       !- Temperature Capacity Multiplier
-    1,                       !- Humidity Capacity Multiplier
-    1,                       !- Carbon Dioxide Capacity Multiplier
-    1.0;                     !- Generic Contaminant Capacity Multiplier
 
   SimulationControl,
     No,                      !- Do Zone Sizing Calculation
@@ -100,26 +100,10 @@
     No,                      !- Run Simulation for Sizing Periods
     Yes;                     !- Run Simulation for Weather File Run Periods
 
-!!  RunPeriod,
-!!    10,                      !- Begin Month
-!!    1,                       !- Begin Day Of Month
-!!    9,                       !- End Month
-!!    30,                      !- End Day Of Month
-!!    Tuesday,                 !- Day Of Week For Start Day
-!!    Yes,                     !- Use WeatherFile Holidays/Special Days
-!!    Yes,                     !- Use WeatherFile DaylightSavingPeriod
-!!    No,                      !- Apply Weekend Holiday Rule
-!!    Yes,                     !- Use WeatherFile Rain Indicators
-!!    Yes;                     !- Use WeatherFile Snow Indicators
-
-  Timestep,4;
-
-! 6, 16 to 6, 19
-
   RunPeriod,
     ,                        !- Name
-    6,                       !- Begin Month
-    16,                      !- Begin Day of Month
+    6,                      !- Begin Month
+    16,                       !- Begin Day of Month
     6,                       !- End Month
     19,                      !- End Day of Month
     Tuesday,                 !- Day of Week for Start Day
@@ -197,9 +181,6 @@
     1.0;                     !- Sky Clearness
 
   Site:GroundTemperature:BuildingSurface,20.03,20.03,20.13,20.30,20.43,20.52,20.62,20.77,20.78,20.55,20.44,20.20;
-
-  ExternalInterface,
-    PtolemyServer;           !- Name of External Interface
 
   Material,
     ST01,                    !- Name
@@ -286,7 +267,7 @@
     0.609600067,             !- Thickness {m}
     1.730800033,             !- Conductivity {W/m-K}
     1842.069946289,          !- Density {kg/m3}
-    1.088568091,             !- Specific Heat {J/kg-K}
+    1088.568091,             !- Specific Heat {J/kg-K}
     0.65,                    !- Thermal Absorptance
     0.65,                    !- Solar Absorptance
     0.65;                    !- Visible Absorptance
@@ -391,12 +372,19 @@
     CP01;                    !- Layer 2
 
   Construction,
+    reverseFLOORR,           !- Name
+    CP01,                    !- Outside Layer
+    CC24;                    !- Layer 2
+
+  Construction,
     SLABL,                   !- Name
     CC15;                    !- Outside Layer
 
   Construction,
     FURNITURE,               !- Name
     WD10;                    !- Outside Layer
+
+! original origin (0,0,0)
 
   Zone,
     ZSF1,                    !- Name
@@ -409,45 +397,53 @@
     3.048000336,             !- Ceiling Height {m}
     453.119995117;           !- Volume {m3}
 
+! original origin (0,8.794457436,0)
+
   Zone,
     ZNF1,                    !- Name
     0,                       !- Direction of Relative North {deg}
     0,                       !- X Origin {m}
-    8.794457436,             !- Y Origin {m}
+    0,                       !- Y Origin {m}
     0,                       !- Z Origin {m}
     1,                       !- Type
     1,                       !- Multiplier
     3.048000336,             !- Ceiling Height {m}
     453.119995117;           !- Volume {m3}
+
+! original origin (0,0,3.352800369)
 
   Zone,
     ZSF2,                    !- Name
     0,                       !- Direction of Relative North {deg}
     0,                       !- X Origin {m}
     0,                       !- Y Origin {m}
-    3.352800369,             !- Z Origin {m}
-    1,                       !- Type
-    1,                       !- Multiplier
-    3.048000336,             !- Ceiling Height {m}
-    453.119995117;           !- Volume {m3}
-
-  Zone,
-    ZNF2,                    !- Name
-    0,                       !- Direction of Relative North {deg}
-    0,                       !- X Origin {m}
-    8.794457436,             !- Y Origin {m}
     0,                       !- Z Origin {m}
     1,                       !- Type
     1,                       !- Multiplier
     3.048000336,             !- Ceiling Height {m}
     453.119995117;           !- Volume {m3}
 
+! original origin (0,8.794457436,0)
+
+  Zone,
+    ZNF2,                    !- Name
+    0,                       !- Direction of Relative North {deg}
+    0,                       !- X Origin {m}
+    0,                       !- Y Origin {m}
+    0,                       !- Z Origin {m}
+    1,                       !- Type
+    1,                       !- Multiplier
+    3.048000336,             !- Ceiling Height {m}
+    453.119995117;           !- Volume {m3}
+
+! original origin (0,0,-2.438400269)
+
   Zone,
     BASE-1,                  !- Name
     0,                       !- Direction of Relative North {deg}
     0,                       !- X Origin {m}
     0,                       !- Y Origin {m}
-    -2.438400269,            !- Z Origin {m}
+    0,                       !- Z Origin {m}
     1,                       !- Type
     1,                       !- Multiplier
     2.438400269,             !- Ceiling Height {m}
@@ -455,12 +451,12 @@
 
   GlobalGeometryRules,
     LowerLeftCorner,         !- Starting Vertex Position
-    Counterclockwise,        !- Vertex Entry Direction
-    WorldCoordinateSystem;   !- Coordinate System
+    CounterClockWise,        !- Vertex Entry Direction
+    World;                   !- Coordinate System
 
   BuildingSurface:Detailed,
     EWall,                   !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZSF1,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -476,7 +472,7 @@
 
   BuildingSurface:Detailed,
     SWall,                   !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZSF1,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -492,7 +488,7 @@
 
   BuildingSurface:Detailed,
     WWall,                   !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZSF1,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -508,7 +504,7 @@
 
   BuildingSurface:Detailed,
     zE-W-5,                  !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZNF1,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -524,7 +520,7 @@
 
   BuildingSurface:Detailed,
     NWall,                   !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZNF1,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -540,7 +536,7 @@
 
   BuildingSurface:Detailed,
     zE-W-8,                  !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZNF1,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -556,7 +552,7 @@
 
   BuildingSurface:Detailed,
     zE-W-11,                 !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZSF2,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -572,7 +568,7 @@
 
   BuildingSurface:Detailed,
     zE-W-13,                 !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZSF2,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -588,7 +584,7 @@
 
   BuildingSurface:Detailed,
     zE-W-15,                 !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZSF2,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -604,7 +600,7 @@
 
   BuildingSurface:Detailed,
     ZRoof,                   !- Name
-    Roof,                    !- Surface Type
+    ROOF,                    !- Surface Type
     ROOFR,                   !- Construction Name
     ZSF2,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -620,7 +616,7 @@
 
   BuildingSurface:Detailed,
     zE-W-17,                 !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZNF2,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -636,7 +632,7 @@
 
   BuildingSurface:Detailed,
     zE-W-19,                 !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZNF2,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -652,7 +648,7 @@
 
   BuildingSurface:Detailed,
     zE-W-21,                 !- Name
-    Wall,                    !- Surface Type
+    WALL,                    !- Surface Type
     WALLR,                   !- Construction Name
     ZNF2,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -668,7 +664,7 @@
 
   BuildingSurface:Detailed,
     zROOF-23,                !- Name
-    Roof,                    !- Surface Type
+    ROOF,                    !- Surface Type
     ROOFR,                   !- Construction Name
     ZNF2,                    !- Zone Name
     Outdoors,                !- Outside Boundary Condition
@@ -684,8 +680,8 @@
 
   BuildingSurface:Detailed,
     BSCEING-1,               !- Name
-    Ceiling,                 !- Surface Type
-    FLOORR,                  !- Construction Name
+    CEILING,                 !- Surface Type
+    reverseFLOORR,           !- Construction Name
     BASE-1,                  !- Zone Name
     Surface,                 !- Outside Boundary Condition
     FSFLOOR-1,               !- Outside Boundary Condition Object
@@ -700,8 +696,8 @@
 
   BuildingSurface:Detailed,
     BNCEING-1,               !- Name
-    Ceiling,                 !- Surface Type
-    FLOORR,                  !- Construction Name
+    CEILING,                 !- Surface Type
+    reverseFLOORR,           !- Construction Name
     BASE-1,                  !- Zone Name
     Surface,                 !- Outside Boundary Condition
     FNFLOOR-1,               !- Outside Boundary Condition Object
@@ -716,7 +712,7 @@
 
   BuildingSurface:Detailed,
     FSFLOOR-1,               !- Name
-    Floor,                   !- Surface Type
+    FLOOR,                   !- Surface Type
     FLOORR,                  !- Construction Name
     ZSF1,                    !- Zone Name
     Surface,                 !- Outside Boundary Condition
@@ -732,7 +728,7 @@
 
   BuildingSurface:Detailed,
     FNFLOOR-1,               !- Name
-    Floor,                   !- Surface Type
+    FLOOR,                   !- Surface Type
     FLOORR,                  !- Construction Name
     ZNF1,                    !- Zone Name
     Surface,                 !- Outside Boundary Condition
@@ -748,8 +744,8 @@
 
   BuildingSurface:Detailed,
     FSCEING-1,               !- Name
-    Ceiling,                 !- Surface Type
-    FLOORR,                  !- Construction Name
+    CEILING,                 !- Surface Type
+    reverseFLOORR,           !- Construction Name
     ZSF1,                    !- Zone Name
     Surface,                 !- Outside Boundary Condition
     SSFLOOR-1,               !- Outside Boundary Condition Object
@@ -764,8 +760,8 @@
 
   BuildingSurface:Detailed,
     FNCEING-1,               !- Name
-    Ceiling,                 !- Surface Type
-    FLOORR,                  !- Construction Name
+    CEILING,                 !- Surface Type
+    reverseFLOORR,           !- Construction Name
     ZNF1,                    !- Zone Name
     Surface,                 !- Outside Boundary Condition
     SNFLOOR-1,               !- Outside Boundary Condition Object
@@ -780,7 +776,7 @@
 
   BuildingSurface:Detailed,
     SSFLOOR-1,               !- Name
-    Floor,                   !- Surface Type
+    FLOOR,                   !- Surface Type
     FLOORR,                  !- Construction Name
     ZSF2,                    !- Zone Name
     Surface,                 !- Outside Boundary Condition
@@ -796,7 +792,7 @@
 
   BuildingSurface:Detailed,
     SNFLOOR-1,               !- Name
-    Floor,                   !- Surface Type
+    FLOOR,                   !- Surface Type
     FLOORR,                  !- Construction Name
     ZNF2,                    !- Zone Name
     Surface,                 !- Outside Boundary Condition
@@ -812,7 +808,7 @@
 
   BuildingSurface:Detailed,
     SLAB-1,                  !- Name
-    Floor,                   !- Surface Type
+    FLOOR,                   !- Surface Type
     SLABL,                   !- Construction Name
     BASE-1,                  !- Zone Name
     Ground,                  !- Outside Boundary Condition
@@ -828,7 +824,7 @@
 
   FenestrationSurface:Detailed,
     EWWndw,                  !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     EWall,                   !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -844,7 +840,7 @@
 
   FenestrationSurface:Detailed,
     NSWndw,                  !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     SWall,                   !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -860,7 +856,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-4,               !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     WWall,                   !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -876,7 +872,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-6,               !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     zE-W-5,                  !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -892,7 +888,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-7,               !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     NWall,                   !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -908,7 +904,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-9,               !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     zE-W-8,                  !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -924,7 +920,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-11,              !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     zE-W-11,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -940,7 +936,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-13,              !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     zE-W-13,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -956,7 +952,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-15,              !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     zE-W-15,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -972,7 +968,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-17,              !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     zE-W-17,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -988,7 +984,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-19,              !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     zE-W-19,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -1004,7 +1000,7 @@
 
   FenestrationSurface:Detailed,
     zWINDOW-21,              !- Name
-    Window,                  !- Surface Type
+    WINDOW,                  !- Surface Type
     Dbl LoE (e2=.1) Clr 6mm/6mm Air,  !- Construction Name
     zE-W-21,                 !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
@@ -1049,871 +1045,177 @@
     Fraction,                !- Name
     0.0,                     !- Lower Limit Value
     1.0,                     !- Upper Limit Value
-    Continuous;              !- Numeric Type
+    CONTINUOUS;              !- Numeric Type
 
   ScheduleTypeLimits,
     Temperature,             !- Name
     -60,                     !- Lower Limit Value
     200,                     !- Upper Limit Value
-    Continuous;              !- Numeric Type
+    CONTINUOUS,              !- Numeric Type
+    Temperature;             !- Unit Type
 
   ScheduleTypeLimits,
     Control Type,            !- Name
     0,                       !- Lower Limit Value
     4,                       !- Upper Limit Value
-    Discrete;                !- Numeric Type
+    DISCRETE;                !- Numeric Type
 
   ScheduleTypeLimits,
     On/Off,                  !- Name
     0,                       !- Lower Limit Value
     1,                       !- Upper Limit Value
-    Discrete;                !- Numeric Type
+    DISCRETE;                !- Numeric Type
 
-  Schedule:Day:Hourly,
-    OCCDAY-1,                !- Name
-    Fraction,                !- Schedule Type Limits Name
-    0,                       !- Hour 1
-    0,                       !- Hour 2
-    0,                       !- Hour 3
-    0,                       !- Hour 4
-    0,                       !- Hour 5
-    0,                       !- Hour 6
-    0,                       !- Hour 7
-    0,                       !- Hour 8
-    0.333333343,             !- Hour 9
-    0.666666627,             !- Hour 10
-    1,                       !- Hour 11
-    1,                       !- Hour 12
-    1,                       !- Hour 13
-    1,                       !- Hour 14
-    1,                       !- Hour 15
-    1,                       !- Hour 16
-    1,                       !- Hour 17
-    0.5,                     !- Hour 18
-    0,                       !- Hour 19
-    0,                       !- Hour 20
-    0,                       !- Hour 21
-    0,                       !- Hour 22
-    0,                       !- Hour 23
-    0;                       !- Hour 24
-
-  Schedule:Day:Hourly,
-    OCCDAY-2,                !- Name
-    Fraction,                !- Schedule Type Limits Name
-    0,                       !- Hour 1
-    0,                       !- Hour 2
-    0,                       !- Hour 3
-    0,                       !- Hour 4
-    0,                       !- Hour 5
-    0,                       !- Hour 6
-    0,                       !- Hour 7
-    0,                       !- Hour 8
-    0.06666667,              !- Hour 9
-    0.133333325,             !- Hour 10
-    0.2,                     !- Hour 11
-    0.2,                     !- Hour 12
-    0.100000001,             !- Hour 13
-    0,                       !- Hour 14
-    0,                       !- Hour 15
-    0,                       !- Hour 16
-    0,                       !- Hour 17
-    0,                       !- Hour 18
-    0,                       !- Hour 19
-    0,                       !- Hour 20
-    0,                       !- Hour 21
-    0,                       !- Hour 22
-    0,                       !- Hour 23
-    0;                       !- Hour 24
-
-  Schedule:Day:Hourly,
-    LITDAY-1,                !- Name
-    Fraction,                !- Schedule Type Limits Name
-    0.2,                     !- Hour 1
-    0.2,                     !- Hour 2
-    0.2,                     !- Hour 3
-    0.2,                     !- Hour 4
-    0.2,                     !- Hour 5
-    0.2,                     !- Hour 6
-    0.2,                     !- Hour 7
-    0.2,                     !- Hour 8
-    0.9,                     !- Hour 9
-    0.9,                     !- Hour 10
-    0.9,                     !- Hour 11
-    0.9,                     !- Hour 12
-    0.9,                     !- Hour 13
-    0.9,                     !- Hour 14
-    0.9,                     !- Hour 15
-    0.9,                     !- Hour 16
-    0.9,                     !- Hour 17
-    0.2,                     !- Hour 18
-    0.2,                     !- Hour 19
-    0.2,                     !- Hour 20
-    0.2,                     !- Hour 21
-    0.2,                     !- Hour 22
-    0.2,                     !- Hour 23
-    0.2;                     !- Hour 24
-
-  Schedule:Day:Hourly,
-    LITDAY-2,                !- Name
-    Fraction,                !- Schedule Type Limits Name
-    0.2,                     !- Hour 1
-    0.2,                     !- Hour 2
-    0.2,                     !- Hour 3
-    0.2,                     !- Hour 4
-    0.2,                     !- Hour 5
-    0.2,                     !- Hour 6
-    0.2,                     !- Hour 7
-    0.2,                     !- Hour 8
-    0.2,                     !- Hour 9
-    0.2,                     !- Hour 10
-    0.2,                     !- Hour 11
-    0.2,                     !- Hour 12
-    0.2,                     !- Hour 13
-    0.2,                     !- Hour 14
-    0.2,                     !- Hour 15
-    0.2,                     !- Hour 16
-    0.2,                     !- Hour 17
-    0.2,                     !- Hour 18
-    0.2,                     !- Hour 19
-    0.2,                     !- Hour 20
-    0.2,                     !- Hour 21
-    0.2,                     !- Hour 22
-    0.2,                     !- Hour 23
-    0.2;                     !- Hour 24
-
-  Schedule:Day:Hourly,
-    EQPDAY-1,                !- Name
-    Fraction,                !- Schedule Type Limits Name
-    0.17,                    !- Hour 1
-    0.17,                    !- Hour 2
-    0.17,                    !- Hour 3
-    0.17,                    !- Hour 4
-    0.17,                    !- Hour 5
-    0.17,                    !- Hour 6
-    0.17,                    !- Hour 7
-    0.17,                    !- Hour 8
-    1,                       !- Hour 9
-    1,                       !- Hour 10
-    1,                       !- Hour 11
-    1,                       !- Hour 12
-    1,                       !- Hour 13
-    1,                       !- Hour 14
-    1,                       !- Hour 15
-    1,                       !- Hour 16
-    1,                       !- Hour 17
-    0.17,                    !- Hour 18
-    0.17,                    !- Hour 19
-    0.17,                    !- Hour 20
-    0.17,                    !- Hour 21
-    0.17,                    !- Hour 22
-    0.17,                    !- Hour 23
-    0.17;                    !- Hour 24
-
-  Schedule:Day:Hourly,
-    EQPDAY-2,                !- Name
-    Fraction,                !- Schedule Type Limits Name
-    0.17,                    !- Hour 1
-    0.17,                    !- Hour 2
-    0.17,                    !- Hour 3
-    0.17,                    !- Hour 4
-    0.17,                    !- Hour 5
-    0.17,                    !- Hour 6
-    0.17,                    !- Hour 7
-    0.17,                    !- Hour 8
-    0.17,                    !- Hour 9
-    0.17,                    !- Hour 10
-    0.17,                    !- Hour 11
-    0.17,                    !- Hour 12
-    0.17,                    !- Hour 13
-    0.17,                    !- Hour 14
-    0.17,                    !- Hour 15
-    0.17,                    !- Hour 16
-    0.17,                    !- Hour 17
-    0.17,                    !- Hour 18
-    0.17,                    !- Hour 19
-    0.17,                    !- Hour 20
-    0.17,                    !- Hour 21
-    0.17,                    !- Hour 22
-    0.17,                    !- Hour 23
-    0.17;                    !- Hour 24
-
-  Schedule:Day:Hourly,
-    INFIL-1,                 !- Name
-    Fraction,                !- Schedule Type Limits Name
-    1,                       !- Hour 1
-    1,                       !- Hour 2
-    1,                       !- Hour 3
-    1,                       !- Hour 4
-    1,                       !- Hour 5
-    1,                       !- Hour 6
-    1,                       !- Hour 7
-    0,                       !- Hour 8
-    0,                       !- Hour 9
-    0,                       !- Hour 10
-    0,                       !- Hour 11
-    0,                       !- Hour 12
-    0,                       !- Hour 13
-    0,                       !- Hour 14
-    0,                       !- Hour 15
-    0,                       !- Hour 16
-    0,                       !- Hour 17
-    0,                       !- Hour 18
-    1,                       !- Hour 19
-    1,                       !- Hour 20
-    1,                       !- Hour 21
-    1,                       !- Hour 22
-    1,                       !- Hour 23
-    1;                       !- Hour 24
-
-  Schedule:Day:Hourly,
-    INFIL-2,                 !- Name
-    Fraction,                !- Schedule Type Limits Name
-    1,                       !- Hour 1
-    1,                       !- Hour 2
-    1,                       !- Hour 3
-    1,                       !- Hour 4
-    1,                       !- Hour 5
-    1,                       !- Hour 6
-    1,                       !- Hour 7
-    0,                       !- Hour 8
-    0,                       !- Hour 9
-    0,                       !- Hour 10
-    0,                       !- Hour 11
-    0,                       !- Hour 12
-    0,                       !- Hour 13
-    1,                       !- Hour 14
-    1,                       !- Hour 15
-    1,                       !- Hour 16
-    1,                       !- Hour 17
-    1,                       !- Hour 18
-    1,                       !- Hour 19
-    1,                       !- Hour 20
-    1,                       !- Hour 21
-    1,                       !- Hour 22
-    1,                       !- Hour 23
-    1;                       !- Hour 24
-
-  Schedule:Day:Hourly,
-    ZSF1-ActDaySchd,         !- Name
-    Any Number,              !- Schedule Type Limits Name
-    149.43,                  !- Hour 1
-    149.43,                  !- Hour 2
-    149.43,                  !- Hour 3
-    149.43,                  !- Hour 4
-    149.43,                  !- Hour 5
-    149.43,                  !- Hour 6
-    149.43,                  !- Hour 7
-    149.43,                  !- Hour 8
-    149.43,                  !- Hour 9
-    149.43,                  !- Hour 10
-    149.43,                  !- Hour 11
-    149.43,                  !- Hour 12
-    149.43,                  !- Hour 13
-    149.43,                  !- Hour 14
-    149.43,                  !- Hour 15
-    149.43,                  !- Hour 16
-    149.43,                  !- Hour 17
-    149.43,                  !- Hour 18
-    149.43,                  !- Hour 19
-    149.43,                  !- Hour 20
-    149.43,                  !- Hour 21
-    149.43,                  !- Hour 22
-    149.43,                  !- Hour 23
-    149.43;                  !- Hour 24
-
-  Schedule:Day:Hourly,
-    FAN-SCHED-1-1,           !- Name
-    On/Off,                  !- Schedule Type Limits Name
-    0,                       !- Hour 1
-    0,                       !- Hour 2
-    0,                       !- Hour 3
-    0,                       !- Hour 4
-    0,                       !- Hour 5
-    0,                       !- Hour 6
-    0,                       !- Hour 7
-    1,                       !- Hour 8
-    1,                       !- Hour 9
-    1,                       !- Hour 10
-    1,                       !- Hour 11
-    1,                       !- Hour 12
-    1,                       !- Hour 13
-    1,                       !- Hour 14
-    1,                       !- Hour 15
-    1,                       !- Hour 16
-    1,                       !- Hour 17
-    1,                       !- Hour 18
-    0,                       !- Hour 19
-    0,                       !- Hour 20
-    0,                       !- Hour 21
-    0,                       !- Hour 22
-    0,                       !- Hour 23
-    0;                       !- Hour 24
-
-  Schedule:Day:Hourly,
-    FAN-SCHED-1-2,           !- Name
-    On/Off,                  !- Schedule Type Limits Name
-    0,                       !- Hour 1
-    0,                       !- Hour 2
-    0,                       !- Hour 3
-    0,                       !- Hour 4
-    0,                       !- Hour 5
-    0,                       !- Hour 6
-    0,                       !- Hour 7
-    1,                       !- Hour 8
-    1,                       !- Hour 9
-    1,                       !- Hour 10
-    1,                       !- Hour 11
-    1,                       !- Hour 12
-    1,                       !- Hour 13
-    0,                       !- Hour 14
-    0,                       !- Hour 15
-    0,                       !- Hour 16
-    0,                       !- Hour 17
-    0,                       !- Hour 18
-    0,                       !- Hour 19
-    0,                       !- Hour 20
-    0,                       !- Hour 21
-    0,                       !- Hour 22
-    0,                       !- Hour 23
-    0;                       !- Hour 24
-
-  Schedule:Day:Hourly,
-    FAN-SCHED-1-3,           !- Name
-    On/Off,                  !- Schedule Type Limits Name
-    1,                       !- Hour 1
-    1,                       !- Hour 2
-    1,                       !- Hour 3
-    1,                       !- Hour 4
-    1,                       !- Hour 5
-    1,                       !- Hour 6
-    1,                       !- Hour 7
-    1,                       !- Hour 8
-    1,                       !- Hour 9
-    1,                       !- Hour 10
-    1,                       !- Hour 11
-    1,                       !- Hour 12
-    1,                       !- Hour 13
-    1,                       !- Hour 14
-    1,                       !- Hour 15
-    1,                       !- Hour 16
-    1,                       !- Hour 17
-    1,                       !- Hour 18
-    1,                       !- Hour 19
-    1,                       !- Hour 20
-    1,                       !- Hour 21
-    1,                       !- Hour 22
-    1,                       !- Hour 23
-    1;                       !- Hour 24
-
-! Cooling schedule. This schedule is set directly by the external interface.
-! During warm-up and system-sizing, it is fixed at 24 degC.
-
-  ExternalInterface:Schedule,
-    TSetCoo,                 !- Name
-    Temperature,             !- Schedule Type Limits Name
-    24;                      !- Initial Value
-
-! Heating schedule. This schedule is set directly by the external interface.
-! During warm-up and system-sizing, it is fixed at 20 degC.
-
-  ExternalInterface:Schedule,
-    TSetHea,                 !- Name
-    Temperature,             !- Schedule Type Limits Name
-    20;                      !- Initial Value
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  EnergyManagementSystem:ProgramCallingManager,
-    Init Window Shading Device Control Constants,  !- Name
-    ENDOFSYSTEMTIMESTEPBEFOREHVACREPORTING,  !- EnergyPlus Model Calling Point
-    InitializeShadeControlFlags;  !- Program Name 1
-
-  EnergyManagementSystem:Program,
-    InitializeShadeControlFlags,  !- Name
-    Set Shade_Status_None = 0.0 - 1.0;  !- Program Line 1
-
-  EnergyManagementSystem:GlobalVariable,
-    Shade_Status_None;       !- Erl Variable 1 Name
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-  Schedule:Day:Hourly,
-    Dual Control Type Day Sch,  !- Name
-    CONTROL TYPE,            !- Schedule Type Limits Name
-    4,                       !- Hour 1
-    4,                       !- Hour 2
-    4,                       !- Hour 3
-    4,                       !- Hour 4
-    4,                       !- Hour 5
-    4,                       !- Hour 6
-    4,                       !- Hour 7
-    4,                       !- Hour 8
-    4,                       !- Hour 9
-    4,                       !- Hour 10
-    4,                       !- Hour 11
-    4,                       !- Hour 12
-    4,                       !- Hour 13
-    4,                       !- Hour 14
-    4,                       !- Hour 15
-    4,                       !- Hour 16
-    4,                       !- Hour 17
-    4,                       !- Hour 18
-    4,                       !- Hour 19
-    4,                       !- Hour 20
-    4,                       !- Hour 21
-    4,                       !- Hour 22
-    4,                       !- Hour 23
-    4;                       !- Hour 24
-
-  Schedule:Week:Daily,
-    OCC-SCHED-1,             !- Name
-    OCCDAY-2,                !- Sunday Schedule:Day Name
-    OCCDAY-1,                !- Monday Schedule:Day Name
-    OCCDAY-1,                !- Tuesday Schedule:Day Name
-    OCCDAY-1,                !- Wednesday Schedule:Day Name
-    OCCDAY-1,                !- Thursday Schedule:Day Name
-    OCCDAY-1,                !- Friday Schedule:Day Name
-    OCCDAY-2,                !- Saturday Schedule:Day Name
-    OCCDAY-2,                !- Holiday Schedule:Day Name
-    OCCDAY-1,                !- SummerDesignDay Schedule:Day Name
-    OCCDAY-2,                !- WinterDesignDay Schedule:Day Name
-    OCCDAY-1,                !- CustomDay1 Schedule:Day Name
-    OCCDAY-1;                !- CustomDay2 Schedule:Day Name
-
-  Schedule:Week:Daily,
-    LIT-SCHED-1,             !- Name
-    LITDAY-2,                !- Sunday Schedule:Day Name
-    LITDAY-1,                !- Monday Schedule:Day Name
-    LITDAY-1,                !- Tuesday Schedule:Day Name
-    LITDAY-1,                !- Wednesday Schedule:Day Name
-    LITDAY-1,                !- Thursday Schedule:Day Name
-    LITDAY-1,                !- Friday Schedule:Day Name
-    LITDAY-2,                !- Saturday Schedule:Day Name
-    LITDAY-2,                !- Holiday Schedule:Day Name
-    LITDAY-1,                !- SummerDesignDay Schedule:Day Name
-    LITDAY-2,                !- WinterDesignDay Schedule:Day Name
-    LITDAY-1,                !- CustomDay1 Schedule:Day Name
-    LITDAY-1;                !- CustomDay2 Schedule:Day Name
-
-  Schedule:Week:Daily,
-    EQP-SCHED-1,             !- Name
-    EQPDAY-2,                !- Sunday Schedule:Day Name
-    EQPDAY-1,                !- Monday Schedule:Day Name
-    EQPDAY-1,                !- Tuesday Schedule:Day Name
-    EQPDAY-1,                !- Wednesday Schedule:Day Name
-    EQPDAY-1,                !- Thursday Schedule:Day Name
-    EQPDAY-1,                !- Friday Schedule:Day Name
-    EQPDAY-2,                !- Saturday Schedule:Day Name
-    EQPDAY-2,                !- Holiday Schedule:Day Name
-    EQPDAY-1,                !- SummerDesignDay Schedule:Day Name
-    EQPDAY-2,                !- WinterDesignDay Schedule:Day Name
-    EQPDAY-1,                !- CustomDay1 Schedule:Day Name
-    EQPDAY-1;                !- CustomDay2 Schedule:Day Name
-
-  Schedule:Week:Daily,
-    INF-SCHED-1,             !- Name
-    INFIL-2,                 !- Sunday Schedule:Day Name
-    INFIL-1,                 !- Monday Schedule:Day Name
-    INFIL-1,                 !- Tuesday Schedule:Day Name
-    INFIL-1,                 !- Wednesday Schedule:Day Name
-    INFIL-1,                 !- Thursday Schedule:Day Name
-    INFIL-1,                 !- Friday Schedule:Day Name
-    INFIL-2,                 !- Saturday Schedule:Day Name
-    INFIL-2,                 !- Holiday Schedule:Day Name
-    INFIL-1,                 !- SummerDesignDay Schedule:Day Name
-    INFIL-2,                 !- WinterDesignDay Schedule:Day Name
-    INFIL-1,                 !- CustomDay1 Schedule:Day Name
-    INFIL-1;                 !- CustomDay2 Schedule:Day Name
-
-  Schedule:Week:Daily,
-    ZSF1-ActWeekSchd,        !- Name
-    ZSF1-ActDaySchd,         !- Sunday Schedule:Day Name
-    ZSF1-ActDaySchd,         !- Monday Schedule:Day Name
-    ZSF1-ActDaySchd,         !- Tuesday Schedule:Day Name
-    ZSF1-ActDaySchd,         !- Wednesday Schedule:Day Name
-    ZSF1-ActDaySchd,         !- Thursday Schedule:Day Name
-    ZSF1-ActDaySchd,         !- Friday Schedule:Day Name
-    ZSF1-ActDaySchd,         !- Saturday Schedule:Day Name
-    ZSF1-ActDaySchd,         !- Holiday Schedule:Day Name
-    ZSF1-ActDaySchd,         !- SummerDesignDay Schedule:Day Name
-    ZSF1-ActDaySchd,         !- WinterDesignDay Schedule:Day Name
-    ZSF1-ActDaySchd,         !- CustomDay1 Schedule:Day Name
-    ZSF1-ActDaySchd;         !- CustomDay2 Schedule:Day Name
-
-  Schedule:Week:Daily,
-    FAN-SCHED-1,             !- Name
-    FAN-SCHED-1-2,           !- Sunday Schedule:Day Name
-    FAN-SCHED-1-1,           !- Monday Schedule:Day Name
-    FAN-SCHED-1-1,           !- Tuesday Schedule:Day Name
-    FAN-SCHED-1-1,           !- Wednesday Schedule:Day Name
-    FAN-SCHED-1-1,           !- Thursday Schedule:Day Name
-    FAN-SCHED-1-1,           !- Friday Schedule:Day Name
-    FAN-SCHED-1-2,           !- Saturday Schedule:Day Name
-    FAN-SCHED-1-2,           !- Holiday Schedule:Day Name
-    FAN-SCHED-1-1,           !- SummerDesignDay Schedule:Day Name
-    FAN-SCHED-1-1,           !- WinterDesignDay Schedule:Day Name
-    FAN-SCHED-1-1,           !- CustomDay1 Schedule:Day Name
-    FAN-SCHED-1-1;           !- CustomDay2 Schedule:Day Name
-
-  Schedule:Week:Daily,
-    FAN-SCHED-ON,            !- Name
-    FAN-SCHED-1-3,           !- Sunday Schedule:Day Name
-    FAN-SCHED-1-3,           !- Monday Schedule:Day Name
-    FAN-SCHED-1-3,           !- Tuesday Schedule:Day Name
-    FAN-SCHED-1-3,           !- Wednesday Schedule:Day Name
-    FAN-SCHED-1-3,           !- Thursday Schedule:Day Name
-    FAN-SCHED-1-3,           !- Friday Schedule:Day Name
-    FAN-SCHED-1-3,           !- Saturday Schedule:Day Name
-    FAN-SCHED-1-3,           !- Holiday Schedule:Day Name
-    FAN-SCHED-1-3,           !- SummerDesignDay Schedule:Day Name
-    FAN-SCHED-1-3,           !- WinterDesignDay Schedule:Day Name
-    FAN-SCHED-1-3,           !- CustomDay1 Schedule:Day Name
-    FAN-SCHED-1-3;           !- CustomDay2 Schedule:Day Name
-
-  Schedule:Week:Daily,
-    Dual Control Type Week Sch,  !- Name
-    Dual Control Type Day Sch,  !- Sunday Schedule:Day Name
-    Dual Control Type Day Sch,  !- Monday Schedule:Day Name
-    Dual Control Type Day Sch,  !- Tuesday Schedule:Day Name
-    Dual Control Type Day Sch,  !- Wednesday Schedule:Day Name
-    Dual Control Type Day Sch,  !- Thursday Schedule:Day Name
-    Dual Control Type Day Sch,  !- Friday Schedule:Day Name
-    Dual Control Type Day Sch,  !- Saturday Schedule:Day Name
-    Dual Control Type Day Sch,  !- Holiday Schedule:Day Name
-    Dual Control Type Day Sch,  !- SummerDesignDay Schedule:Day Name
-    Dual Control Type Day Sch,  !- WinterDesignDay Schedule:Day Name
-    Dual Control Type Day Sch,  !- CustomDay1 Schedule:Day Name
-    Dual Control Type Day Sch;  !- CustomDay2 Schedule:Day Name
-
-  Schedule:Year,
+  Schedule:Compact,
     OCC-SCHED,               !- Name
-    Fraction,                !- Schedule Type Limits Name
-    OCC-SCHED-1,             !- Schedule:Week Name 1
-    1,                       !- Start Month 1
-    1,                       !- Start Day 1
-    12,                      !- End Month 1
-    31;                      !- End Day 1
+    FRACTION,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays SummerDesignDay CustomDay1 CustomDay2, !- Field 2
+    Until: 8:00,0.00,        !- Field 3
+    Until: 9:00,0.333333343, !- Field 5
+    Until: 10:00,0.666666627,!- Field 7
+    Until: 17:00,1.00,       !- Field 9
+    Until: 18:00,0.50,       !- Field 11
+    Until: 24:00,0.00,       !- Field 13
+    For: Weekends WinterDesignDay Holidays, !- Field 15
+    Until: 8:00,0.00,        !- Field 16
+    Until: 9:00,.06666667,   !- Field 18
+    Until: 10:00,0.133333325,!- Field 20
+    Until: 12:00,0.20,       !- Field 22
+    Until: 13:00,0.100000001,!- Field 24
+    Until: 24:00,0.00;       !- Field 26
 
-  Schedule:Year,
+  Schedule:Compact,
     LIT-SCHED,               !- Name
-    Fraction,                !- Schedule Type Limits Name
-    LIT-SCHED-1,             !- Schedule:Week Name 1
-    1,                       !- Start Month 1
-    1,                       !- Start Day 1
-    12,                      !- End Month 1
-    31;                      !- End Day 1
+    FRACTION,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays SummerDesignDay CustomDay1 CustomDay2, !- Field 2
+    Until: 8:00,0.20,        !- Field 3
+    Until: 17:00,0.90,       !- Field 5
+    Until: 24:00,0.20,       !- Field 7
+    For: Weekends Holidays WinterDesignDay, !- Field 9
+    Until: 24:00,0.20;       !- Field 10
 
-  Schedule:Year,
+  Schedule:Compact,
     EQP-SCHED,               !- Name
-    Fraction,                !- Schedule Type Limits Name
-    EQP-SCHED-1,             !- Schedule:Week Name 1
-    1,                       !- Start Month 1
-    1,                       !- Start Day 1
-    12,                      !- End Month 1
-    31;                      !- End Day 1
+    FRACTION,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays SummerDesignDay CustomDay1 CustomDay2, !- Field 2
+    Until: 8:00,0.17,        !- Field 3
+    Until: 17:00,1.00,       !- Field 5
+    Until: 24:00,0.17,       !- Field 7
+    For: Weekends WinterDesignDay Holidays, !- Field 9
+    Until: 24:00,0.17;       !- Field 10
 
-  Schedule:Year,
+  Schedule:Compact,
     INF-SCHED,               !- Name
-    Fraction,                !- Schedule Type Limits Name
-    INF-SCHED-1,             !- Schedule:Week Name 1
-    1,                       !- Start Month 1
-    1,                       !- Start Day 1
-    12,                      !- End Month 1
-    31;                      !- End Day 1
+    FRACTION,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays SummerDesignDay CustomDay1 CustomDay2, !- Field 2
+    Until: 7:00,1.00,        !- Field 3
+    Until: 8:00,0.00,        !- Field 5
+    Until: 18:00,0.00,       !- Field 7
+    Until: 24:00,1.00,       !- Field 9
+    For: Weekends WinterDesignDay Holidays, !- Field 11
+    Until: 7:00,1.00,        !- Field 12
+    Until: 13:00,0.00,       !- Field 14
+    Until: 24:00,1.00;       !- Field 16
 
-  Schedule:Year,
-    ZSF1-ActSchd,            !- Name
-    Any Number,              !- Schedule Type Limits Name
-    ZSF1-ActWeekSchd,        !- Schedule:Week Name 1
-    1,                       !- Start Month 1
-    1,                       !- Start Day 1
-    12,                      !- End Month 1
-    31;                      !- End Day 1
+  Schedule:Compact,
+    ZSF1-ACTSCHD,            !- Name
+    ANY NUMBER,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Alldays,            !- Field 2
+    Until: 24:00,149.43;     !- Field 3
 
-  Schedule:Year,
+  Schedule:Compact,
     FAN-SCHED,               !- Name
-    On/Off,                  !- Schedule Type Limits Name
-    FAN-SCHED-ON,            !- Schedule:Week Name 1
-    1,                       !- Start Month 1
-    1,                       !- Start Day 1
-    12,                      !- End Month 1
-    31;                      !- End Day 1
+    ON/OFF,                  !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays SummerDesignDay WinterDesignDay CustomDay1 CustomDay2, !- Field 2
+    Until: 7:00,0.00,        !- Field 3
+    Until: 18:00,1.00,       !- Field 5
+    Until: 24:00,0.00,       !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 7:00,0.00,        !- Field 10
+    Until: 13:00,1.00,       !- Field 12
+    Until: 24:00,0.00;       !- Field 14
 
-  Schedule:Year,
-    Zone Control Type Sched, !- Name
-    Control Type,            !- Schedule Type Limits Name
-    Dual Control Type Week Sch,  !- Schedule:Week Name 1
-    1,                       !- Start Month 1
-    1,                       !- Start Day 1
-    12,                      !- End Month 1
-    31;                      !- End Day 1
+  Schedule:Compact,
+    CLG-SCHED,               !- Name
+    TEMPERATURE,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays SummerDesignDay WinterDesignDay CustomDay1 CustomDay2, !- Field 2
+    Until: 7:00,40.00,       !- Field 3
+    Until: 18:00,23.90,      !- Field 5
+    Until: 24:00,40.00,      !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 7:00,40.00,       !- Field 10
+    Until: 13:00,23.90,      !- Field 12
+    Until: 24:00,32.20;      !- Field 14
 
-  Schedule:Day:Hourly,
-    Min OA Weekday Day Sch,  !- Name
-    Fraction,                !- Schedule Type Limits Name
-    .02,                     !- Hour 1
-    .02,                     !- Hour 2
-    .02,                     !- Hour 3
-    .02,                     !- Hour 4
-    .02,                     !- Hour 5
-    .02,                     !- Hour 6
-    1.,                      !- Hour 7
-    1.,                      !- Hour 8
-    1.,                      !- Hour 9
-    1.,                      !- Hour 10
-    1.,                      !- Hour 11
-    1.,                      !- Hour 12
-    1.,                      !- Hour 13
-    1.,                      !- Hour 14
-    1.,                      !- Hour 15
-    1.,                      !- Hour 16
-    1.,                      !- Hour 17
-    1.,                      !- Hour 18
-    .02,                     !- Hour 19
-    .02,                     !- Hour 20
-    .02,                     !- Hour 21
-    .02,                     !- Hour 22
-    .02,                     !- Hour 23
-    .02;                     !- Hour 24
+  Schedule:Compact,
+    HTG-SCHED,               !- Name
+    TEMPERATURE,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays SummerDesignDay WinterDesignDay CustomDay1 CustomDay2, !- Field 2
+    Until: 7:00,12.80,       !- Field 3
+    Until: 18:00,21.10,      !- Field 5
+    Until: 24:00,12.80,      !- Field 7
+    For: Weekends Holidays,  !- Field 9
+    Until: 7:00,12.80,       !- Field 10
+    Until: 13:00,21.10,      !- Field 12
+    Until: 24:00,12.80;      !- Field 14
 
-  Schedule:Day:Hourly,
-    Min OA Weekend Day Sch,  !- Name
-    Fraction,                !- Schedule Type Limits Name
-    .02,                     !- Hour 1
-    .02,                     !- Hour 2
-    .02,                     !- Hour 3
-    .02,                     !- Hour 4
-    .02,                     !- Hour 5
-    .02,                     !- Hour 6
-    .02,                     !- Hour 7
-    .02,                     !- Hour 8
-    .02,                     !- Hour 9
-    .02,                     !- Hour 10
-    .02,                     !- Hour 11
-    .02,                     !- Hour 12
-    .02,                     !- Hour 13
-    .02,                     !- Hour 14
-    .02,                     !- Hour 15
-    .02,                     !- Hour 16
-    .02,                     !- Hour 17
-    .02,                     !- Hour 18
-    .02,                     !- Hour 19
-    .02,                     !- Hour 20
-    .02,                     !- Hour 21
-    .02,                     !- Hour 22
-    .02,                     !- Hour 23
-    .02;                     !- Hour 24
+  Schedule:Compact,
+    ZONE CONTROL TYPE SCHED, !- Name
+    CONTROL TYPE,            !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Alldays,            !- Field 2
+    Until: 24:00,4.00;       !- Field 3
 
-  Schedule:Week:Daily,
-    Min OA Week Sch,         !- Name
-    Min OA Weekend Day Sch,  !- Sunday Schedule:Day Name
-    Min OA Weekday Day Sch,  !- Monday Schedule:Day Name
-    Min OA Weekday Day Sch,  !- Tuesday Schedule:Day Name
-    Min OA Weekday Day Sch,  !- Wednesday Schedule:Day Name
-    Min OA Weekday Day Sch,  !- Thursday Schedule:Day Name
-    Min OA Weekday Day Sch,  !- Friday Schedule:Day Name
-    Min OA Weekend Day Sch,  !- Saturday Schedule:Day Name
-    Min OA Weekend Day Sch,  !- Holiday Schedule:Day Name
-    Min OA Weekend Day Sch,  !- SummerDesignDay Schedule:Day Name
-    Min OA Weekend Day Sch,  !- WinterDesignDay Schedule:Day Name
-    Min OA Weekend Day Sch,  !- CustomDay1 Schedule:Day Name
-    Min OA Weekend Day Sch;  !- CustomDay2 Schedule:Day Name
+  Schedule:Compact,
+    MIN OA SCHED,            !- Name
+    FRACTION,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Weekdays,           !- Field 2
+    Until: 6:00,2.00E-002,   !- Field 3
+    Until: 18:00,1.00,       !- Field 5
+    Until: 24:00,2.00E-002,  !- Field 7
+    For: Weekends Holidays SummerDesignDay WinterDesignDay CustomDay1 CustomDay2, !- Field 9
+    Until: 24:00,2.00E-002;  !- Field 10
 
-  Schedule:Year,
-    Min OA Sched,            !- Name
-    Fraction,                !- Schedule Type Limits Name
-    Min OA Week Sch,         !- Schedule:Week Name 1
-    1,                       !- Start Month 1
-    1,                       !- Start Day 1
-    12,                      !- End Month 1
-    31;                      !- End Day 1
+  Schedule:Compact,
+    REPORTSCH,               !- Name
+    ON/OFF,                  !- Schedule Type Limits Name
+    Through: 1/7,            !- Field 1
+    For: Alldays,            !- Field 2
+    Until: 24:00,0.00,       !- Field 3
+    Through: 1/8,            !- Field 5
+    For: Alldays,            !- Field 6
+    Until: 24:00,1.00,       !- Field 7
+    Through: 7/2,            !- Field 9
+    For: Alldays,            !- Field 10
+    Until: 24:00,0.00,       !- Field 11
+    Through: 7/3,            !- Field 13
+    For: Alldays,            !- Field 14
+    Until: 24:00,1.00,       !- Field 15
+    Through: 12/31,          !- Field 17
+    For: Alldays,            !- Field 18
+    Until: 24:00,0.00;       !- Field 19
 
-  Schedule:Day:Hourly,
-    AllOffDay,               !- Name
-    On/Off,                  !- Schedule Type Limits Name
-    0,                       !- Hour 1
-    0,                       !- Hour 2
-    0,                       !- Hour 3
-    0,                       !- Hour 4
-    0,                       !- Hour 5
-    0,                       !- Hour 6
-    0,                       !- Hour 7
-    0,                       !- Hour 8
-    0,                       !- Hour 9
-    0,                       !- Hour 10
-    0,                       !- Hour 11
-    0,                       !- Hour 12
-    0,                       !- Hour 13
-    0,                       !- Hour 14
-    0,                       !- Hour 15
-    0,                       !- Hour 16
-    0,                       !- Hour 17
-    0,                       !- Hour 18
-    0,                       !- Hour 19
-    0,                       !- Hour 20
-    0,                       !- Hour 21
-    0,                       !- Hour 22
-    0,                       !- Hour 23
-    0;                       !- Hour 24
-
-  Schedule:Day:Hourly,
-    AllOnDay,                !- Name
-    On/Off,                  !- Schedule Type Limits Name
-    1,                       !- Hour 1
-    1,                       !- Hour 2
-    1,                       !- Hour 3
-    1,                       !- Hour 4
-    1,                       !- Hour 5
-    1,                       !- Hour 6
-    1,                       !- Hour 7
-    1,                       !- Hour 8
-    1,                       !- Hour 9
-    1,                       !- Hour 10
-    1,                       !- Hour 11
-    1,                       !- Hour 12
-    1,                       !- Hour 13
-    1,                       !- Hour 14
-    1,                       !- Hour 15
-    1,                       !- Hour 16
-    1,                       !- Hour 17
-    1,                       !- Hour 18
-    1,                       !- Hour 19
-    1,                       !- Hour 20
-    1,                       !- Hour 21
-    1,                       !- Hour 22
-    1,                       !- Hour 23
-    1;                       !- Hour 24
-
-  Schedule:Week:Daily,
-    AllOffWeek,              !- Name
-    AllOffDay,               !- Sunday Schedule:Day Name
-    AllOffDay,               !- Monday Schedule:Day Name
-    AllOffDay,               !- Tuesday Schedule:Day Name
-    AllOffDay,               !- Wednesday Schedule:Day Name
-    AllOffDay,               !- Thursday Schedule:Day Name
-    AllOffDay,               !- Friday Schedule:Day Name
-    AllOffDay,               !- Saturday Schedule:Day Name
-    AllOffDay,               !- Holiday Schedule:Day Name
-    AllOffDay,               !- SummerDesignDay Schedule:Day Name
-    AllOffDay,               !- WinterDesignDay Schedule:Day Name
-    AllOffDay,               !- CustomDay1 Schedule:Day Name
-    AllOffDay;               !- CustomDay2 Schedule:Day Name
-
-  Schedule:Week:Daily,
-    AllOnWeek,               !- Name
-    AllOnDay,                !- Sunday Schedule:Day Name
-    AllOnDay,                !- Monday Schedule:Day Name
-    AllOnDay,                !- Tuesday Schedule:Day Name
-    AllOnDay,                !- Wednesday Schedule:Day Name
-    AllOnDay,                !- Thursday Schedule:Day Name
-    AllOnDay,                !- Friday Schedule:Day Name
-    AllOnDay,                !- Saturday Schedule:Day Name
-    AllOnDay,                !- Holiday Schedule:Day Name
-    AllOnDay,                !- SummerDesignDay Schedule:Day Name
-    AllOnDay,                !- WinterDesignDay Schedule:Day Name
-    AllOnDay,                !- CustomDay1 Schedule:Day Name
-    AllOnDay;                !- CustomDay2 Schedule:Day Name
-
-  Schedule:Day:Hourly,
-    AlwaysOffDay,            !- Name
-    Fraction,                !- Schedule Type Limits Name
-    0,                       !- Hour 1
-    0,                       !- Hour 2
-    0,                       !- Hour 3
-    0,                       !- Hour 4
-    0,                       !- Hour 5
-    0,                       !- Hour 6
-    0,                       !- Hour 7
-    0,                       !- Hour 8
-    0,                       !- Hour 9
-    0,                       !- Hour 10
-    0,                       !- Hour 11
-    0,                       !- Hour 12
-    0,                       !- Hour 13
-    0,                       !- Hour 14
-    0,                       !- Hour 15
-    0,                       !- Hour 16
-    0,                       !- Hour 17
-    0,                       !- Hour 18
-    0,                       !- Hour 19
-    0,                       !- Hour 20
-    0,                       !- Hour 21
-    0,                       !- Hour 22
-    0,                       !- Hour 23
-    0;                       !- Hour 24
-
-  Schedule:Day:Hourly,
-    AlwaysOnDay,             !- Name
-    Fraction,                !- Schedule Type Limits Name
-    1,                       !- Hour 1
-    1,                       !- Hour 2
-    1,                       !- Hour 3
-    1,                       !- Hour 4
-    1,                       !- Hour 5
-    1,                       !- Hour 6
-    1,                       !- Hour 7
-    1,                       !- Hour 8
-    1,                       !- Hour 9
-    1,                       !- Hour 10
-    1,                       !- Hour 11
-    1,                       !- Hour 12
-    1,                       !- Hour 13
-    1,                       !- Hour 14
-    1,                       !- Hour 15
-    1,                       !- Hour 16
-    1,                       !- Hour 17
-    1,                       !- Hour 18
-    1,                       !- Hour 19
-    1,                       !- Hour 20
-    1,                       !- Hour 21
-    1,                       !- Hour 22
-    1,                       !- Hour 23
-    1;                       !- Hour 24
-
-  Schedule:Week:Daily,
-    AlwaysOffWeek,           !- Name
-    AlwaysOffDay,            !- Sunday Schedule:Day Name
-    AlwaysOffDay,            !- Monday Schedule:Day Name
-    AlwaysOffDay,            !- Tuesday Schedule:Day Name
-    AlwaysOffDay,            !- Wednesday Schedule:Day Name
-    AlwaysOffDay,            !- Thursday Schedule:Day Name
-    AlwaysOffDay,            !- Friday Schedule:Day Name
-    AlwaysOffDay,            !- Saturday Schedule:Day Name
-    AlwaysOffDay,            !- Holiday Schedule:Day Name
-    AlwaysOffDay,            !- SummerDesignDay Schedule:Day Name
-    AlwaysOffDay,            !- WinterDesignDay Schedule:Day Name
-    AlwaysOffDay,            !- CustomDay1 Schedule:Day Name
-    AlwaysOffDay;            !- CustomDay2 Schedule:Day Name
-
-  Schedule:Week:Daily,
-    AlwaysOnWeek,            !- Name
-    AlwaysOnDay,             !- Sunday Schedule:Day Name
-    AlwaysOnDay,             !- Monday Schedule:Day Name
-    AlwaysOnDay,             !- Tuesday Schedule:Day Name
-    AlwaysOnDay,             !- Wednesday Schedule:Day Name
-    AlwaysOnDay,             !- Thursday Schedule:Day Name
-    AlwaysOnDay,             !- Friday Schedule:Day Name
-    AlwaysOnDay,             !- Saturday Schedule:Day Name
-    AlwaysOnDay,             !- Holiday Schedule:Day Name
-    AlwaysOnDay,             !- SummerDesignDay Schedule:Day Name
-    AlwaysOnDay,             !- WinterDesignDay Schedule:Day Name
-    AlwaysOnDay,             !- CustomDay1 Schedule:Day Name
-    AlwaysOnDay;             !- CustomDay2 Schedule:Day Name
-
-  Schedule:Year,
-    AlwaysOn,                !- Name
-    Fraction,                !- Schedule Type Limits Name
-    AlwaysOnWeek,            !- Schedule:Week Name 1
-    1,                       !- Start Month 1
-    1,                       !- Start Day 1
-    12,                      !- End Month 1
-    31;                      !- End Day 1
+  Schedule:Compact,
+    ALWAYSON,                !- Name
+    FRACTION,                !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: Alldays,            !- Field 2
+    Until: 24:00,1.00;       !- Field 3
 
   People,
     ZSF1 People 1,           !- Name
     ZSF1,                    !- Zone or ZoneList Name
     OCC-SCHED,               !- Number of People Schedule Name
-    People,                  !- Number of People Calculation Method
+    people,                  !- Number of People Calculation Method
     3.27,                    !- Number of People
     ,                        !- People per Zone Floor Area {person/m2}
     ,                        !- Zone Floor Area per Person {m2/person}
@@ -1925,7 +1227,7 @@
     ZNF1 People 1,           !- Name
     ZNF1,                    !- Zone or ZoneList Name
     OCC-SCHED,               !- Number of People Schedule Name
-    People,                  !- Number of People Calculation Method
+    people,                  !- Number of People Calculation Method
     3.27,                    !- Number of People
     ,                        !- People per Zone Floor Area {person/m2}
     ,                        !- Zone Floor Area per Person {m2/person}
@@ -1937,7 +1239,7 @@
     ZSF2 People 1,           !- Name
     ZSF2,                    !- Zone or ZoneList Name
     OCC-SCHED,               !- Number of People Schedule Name
-    People,                  !- Number of People Calculation Method
+    people,                  !- Number of People Calculation Method
     3.27,                    !- Number of People
     ,                        !- People per Zone Floor Area {person/m2}
     ,                        !- Zone Floor Area per Person {m2/person}
@@ -1949,7 +1251,7 @@
     ZNF2 People 1,           !- Name
     ZNF2,                    !- Zone or ZoneList Name
     OCC-SCHED,               !- Number of People Schedule Name
-    People,                  !- Number of People Calculation Method
+    people,                  !- Number of People Calculation Method
     3.27,                    !- Number of People
     ,                        !- People per Zone Floor Area {person/m2}
     ,                        !- Zone Floor Area per Person {m2/person}
@@ -2067,8 +1369,8 @@
     AlwaysOn,                !- Schedule Name
     EquipmentLevel,          !- Design Level Calculation Method
     726,                     !- Design Level {W}
-    ,                        !- Power per Zone Floor Area {W/m2}
-    ,                        !- Power per Person {W/Person}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/Person}
     0,                       !- Fraction Latent
     0.7,                     !- Fraction Radiant
     0;                       !- Fraction Lost
@@ -2077,7 +1379,7 @@
     ZSF1 Infil 1,            !- Name
     ZSF1,                    !- Zone or ZoneList Name
     INF-SCHED,               !- Schedule Name
-    Flow/Zone,               !- Design Flow Rate Calculation Method
+    flow/zone,               !- Design Flow Rate Calculation Method
     0.043,                   !- Design Flow Rate {m3/s}
     ,                        !- Flow per Zone Floor Area {m3/s-m2}
     ,                        !- Flow per Exterior Surface Area {m3/s-m2}
@@ -2091,7 +1393,7 @@
     ZNF1 Infil 1,            !- Name
     ZNF1,                    !- Zone or ZoneList Name
     INF-SCHED,               !- Schedule Name
-    Flow/Zone,               !- Design Flow Rate Calculation Method
+    flow/zone,               !- Design Flow Rate Calculation Method
     0.043,                   !- Design Flow Rate {m3/s}
     ,                        !- Flow per Zone Floor Area {m3/s-m2}
     ,                        !- Flow per Exterior Surface Area {m3/s-m2}
@@ -2105,7 +1407,7 @@
     ZSF2 Infil 1,            !- Name
     ZSF2,                    !- Zone or ZoneList Name
     INF-SCHED,               !- Schedule Name
-    Flow/Zone,               !- Design Flow Rate Calculation Method
+    flow/zone,               !- Design Flow Rate Calculation Method
     0.043,                   !- Design Flow Rate {m3/s}
     ,                        !- Flow per Zone Floor Area {m3/s-m2}
     ,                        !- Flow per Exterior Surface Area {m3/s-m2}
@@ -2119,7 +1421,7 @@
     ZNF2 Infil 1,            !- Name
     ZNF2,                    !- Zone or ZoneList Name
     INF-SCHED,               !- Schedule Name
-    Flow/Zone,               !- Design Flow Rate Calculation Method
+    flow/zone,               !- Design Flow Rate Calculation Method
     0.043,                   !- Design Flow Rate {m3/s}
     ,                        !- Flow per Zone Floor Area {m3/s-m2}
     ,                        !- Flow per Exterior Surface Area {m3/s-m2}
@@ -2133,7 +1435,7 @@
     BASE-1 Infil 1,          !- Name
     BASE-1,                  !- Zone or ZoneList Name
     INF-SCHED,               !- Schedule Name
-    Flow/Zone,               !- Design Flow Rate Calculation Method
+    flow/zone,               !- Design Flow Rate Calculation Method
     0.402,                   !- Design Flow Rate {m3/s}
     ,                        !- Flow per Zone Floor Area {m3/s-m2}
     ,                        !- Flow per Exterior Surface Area {m3/s-m2}
@@ -2169,7 +1471,7 @@
 
   DesignSpecification:OutdoorAir,
     SZ DSOA ZSF1,            !- Name
-    Flow/Person,             !- Outdoor Air Method
+    FLOW/PERSON,             !- Outdoor Air Method
     0.00944,                 !- Outdoor Air Flow per Person {m3/s-person}
     0.0,                     !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
     0.0;                     !- Outdoor Air Flow per Zone {m3/s}
@@ -2200,7 +1502,7 @@
 
   DesignSpecification:OutdoorAir,
     SZ DSOA ZNF1,            !- Name
-    Flow/Person,             !- Outdoor Air Method
+    FLOW/PERSON,             !- Outdoor Air Method
     0.00944,                 !- Outdoor Air Flow per Person {m3/s-person}
     0.0,                     !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
     0.0;                     !- Outdoor Air Flow per Zone {m3/s}
@@ -2231,7 +1533,7 @@
 
   DesignSpecification:OutdoorAir,
     SZ DSOA ZSF2,            !- Name
-    Flow/Person,             !- Outdoor Air Method
+    FLOW/PERSON,             !- Outdoor Air Method
     0.00944,                 !- Outdoor Air Flow per Person {m3/s-person}
     0.0,                     !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
     0.0;                     !- Outdoor Air Flow per Zone {m3/s}
@@ -2262,7 +1564,7 @@
 
   DesignSpecification:OutdoorAir,
     SZ DSOA ZNF2,            !- Name
-    Flow/Person,             !- Outdoor Air Method
+    FLOW/PERSON,             !- Outdoor Air Method
     0.00944,                 !- Outdoor Air Flow per Person {m3/s-person}
     0.0,                     !- Outdoor Air Flow per Zone Floor Area {m3/s-m2}
     0.0;                     !- Outdoor Air Flow per Zone {m3/s}
@@ -2277,8 +1579,13 @@
     -0.000009720,            !- Coefficient6 x*y
     12.77778,                !- Minimum Value of x
     23.88889,                !- Maximum Value of x
-    23.88889,                !- Minimum Value of y
-    46.11111;                !- Maximum Value of y
+    18.0,                    !- Minimum Value of y
+    46.11111,                !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Temperature,             !- Input Unit Type for X
+    Temperature,             !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
 
   Curve:Biquadratic,
     WindACEIRFT,             !- Name
@@ -2290,8 +1597,13 @@
     -0.000728028,            !- Coefficient6 x*y
     12.77778,                !- Minimum Value of x
     23.88889,                !- Maximum Value of x
-    23.88889,                !- Minimum Value of y
-    46.11111;                !- Maximum Value of y
+    18.0,                    !- Minimum Value of y
+    46.11111,                !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Temperature,             !- Input Unit Type for X
+    Temperature,             !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
 
   Curve:Quadratic,
     WindACCoolCapFFF,        !- Name
@@ -2407,22 +1719,22 @@
     OA Sys 1,                !- Component 1 Name
     Air Loop 1 Inlet Node,   !- Component 1 Inlet Node Name
     Mixed Air 1 Node,        !- Component 1 Outlet Node Name
-    Passive,                 !- Component 1 Branch Control Type
+    PASSIVE,                 !- Component 1 Branch Control Type
     CoilSystem:Cooling:DX,   !- Component 2 Object Type
     DX Cooling Coil System 1,!- Component 2 Name
     Mixed Air 1 Node,        !- Component 2 Inlet Node Name
     DX Cooling Coil 1 Outlet Node,  !- Component 2 Outlet Node Name
-    Passive,                 !- Component 2 Branch Control Type
+    PASSIVE,                 !- Component 2 Branch Control Type
     Coil:Heating:Gas,        !- Component 3 Object Type
     Main Heating Coil 1,     !- Component 3 Name
     DX Cooling Coil 1 Outlet Node,  !- Component 3 Inlet Node Name
     Main Heating Coil 1 Air Outlet Node,  !- Component 3 Outlet Node Name
-    Passive,                 !- Component 3 Branch Control Type
+    PASSIVE,                 !- Component 3 Branch Control Type
     Fan:ConstantVolume,      !- Component 4 Object Type
     Supply Fan 1,            !- Component 4 Name
     Main Heating Coil 1 Air Outlet Node,  !- Component 4 Inlet Node Name
     Air Loop 1 Outlet Node,  !- Component 4 Outlet Node Name
-    Active;                  !- Component 4 Branch Control Type
+    ACTIVE;                  !- Component 4 Branch Control Type
 
   Branch,
     Air Loop 2 Main Branch,  !- Name
@@ -2432,22 +1744,22 @@
     OA Sys 2,                !- Component 1 Name
     Air Loop 2 Inlet Node,   !- Component 1 Inlet Node Name
     Mixed Air 2 Node,        !- Component 1 Outlet Node Name
-    Passive,                 !- Component 1 Branch Control Type
+    PASSIVE,                 !- Component 1 Branch Control Type
     CoilSystem:Cooling:DX,   !- Component 2 Object Type
     DX Cooling Coil System 2,!- Component 2 Name
     Mixed Air 2 Node,        !- Component 2 Inlet Node Name
     DX Cooling Coil 2 Outlet Node,  !- Component 2 Outlet Node Name
-    Passive,                 !- Component 2 Branch Control Type
+    PASSIVE,                 !- Component 2 Branch Control Type
     Coil:Heating:Gas,        !- Component 3 Object Type
     Main Heating Coil 2,     !- Component 3 Name
     DX Cooling Coil 2 Outlet Node,  !- Component 3 Inlet Node Name
     Main Heating Coil 2 Air Outlet Node,  !- Component 3 Outlet Node Name
-    Passive,                 !- Component 3 Branch Control Type
+    PASSIVE,                 !- Component 3 Branch Control Type
     Fan:ConstantVolume,      !- Component 4 Object Type
     Supply Fan 2,            !- Component 4 Name
     Main Heating Coil 2 Air Outlet Node,  !- Component 4 Inlet Node Name
     Air Loop 2 Outlet Node,  !- Component 4 Outlet Node Name
-    Active;                  !- Component 4 Branch Control Type
+    ACTIVE;                  !- Component 4 Branch Control Type
 
   Branch,
     Air Loop 3 Main Branch,  !- Name
@@ -2457,22 +1769,22 @@
     OA Sys 3,                !- Component 1 Name
     Air Loop 3 Inlet Node,   !- Component 1 Inlet Node Name
     Mixed Air 3 Node,        !- Component 1 Outlet Node Name
-    Passive,                 !- Component 1 Branch Control Type
+    PASSIVE,                 !- Component 1 Branch Control Type
     CoilSystem:Cooling:DX,   !- Component 2 Object Type
     DX Cooling Coil System 3,!- Component 2 Name
     Mixed Air 3 Node,        !- Component 2 Inlet Node Name
     DX Cooling Coil 3 Outlet Node,  !- Component 2 Outlet Node Name
-    Passive,                 !- Component 2 Branch Control Type
+    PASSIVE,                 !- Component 2 Branch Control Type
     Coil:Heating:Gas,        !- Component 3 Object Type
     Main Heating Coil 3,     !- Component 3 Name
     DX Cooling Coil 3 Outlet Node,  !- Component 3 Inlet Node Name
     Main Heating Coil 3 Air Outlet Node,  !- Component 3 Outlet Node Name
-    Passive,                 !- Component 3 Branch Control Type
+    PASSIVE,                 !- Component 3 Branch Control Type
     Fan:ConstantVolume,      !- Component 4 Object Type
     Supply Fan 3,            !- Component 4 Name
     Main Heating Coil 3 Air Outlet Node,  !- Component 4 Inlet Node Name
     Air Loop 3 Outlet Node,  !- Component 4 Outlet Node Name
-    Active;                  !- Component 4 Branch Control Type
+    ACTIVE;                  !- Component 4 Branch Control Type
 
   Branch,
     Air Loop 4 Main Branch,  !- Name
@@ -2482,22 +1794,22 @@
     OA Sys 4,                !- Component 1 Name
     Air Loop 4 Inlet Node,   !- Component 1 Inlet Node Name
     Mixed Air 4 Node,        !- Component 1 Outlet Node Name
-    Passive,                 !- Component 1 Branch Control Type
+    PASSIVE,                 !- Component 1 Branch Control Type
     CoilSystem:Cooling:DX,   !- Component 2 Object Type
     DX Cooling Coil System 4,!- Component 2 Name
     Mixed Air 4 Node,        !- Component 2 Inlet Node Name
     DX Cooling Coil 4 Outlet Node,  !- Component 2 Outlet Node Name
-    Passive,                 !- Component 2 Branch Control Type
+    PASSIVE,                 !- Component 2 Branch Control Type
     Coil:Heating:Gas,        !- Component 3 Object Type
     Main Heating Coil 4,     !- Component 3 Name
     DX Cooling Coil 4 Outlet Node,  !- Component 3 Inlet Node Name
     Main Heating Coil 4 Air Outlet Node,  !- Component 3 Outlet Node Name
-    Passive,                 !- Component 3 Branch Control Type
+    PASSIVE,                 !- Component 3 Branch Control Type
     Fan:ConstantVolume,      !- Component 4 Object Type
     Supply Fan 4,            !- Component 4 Name
     Main Heating Coil 4 Air Outlet Node,  !- Component 4 Inlet Node Name
     Air Loop 4 Outlet Node,  !- Component 4 Outlet Node Name
-    Active;                  !- Component 4 Branch Control Type
+    ACTIVE;                  !- Component 4 Branch Control Type
 
   AirLoopHVAC,
     Air Loop 1,              !- Name
@@ -2682,8 +1994,8 @@
 
   ThermostatSetpoint:DualSetpoint,
     DualSetPoint,            !- Name
-    TSetHea,                 !- Heating Setpoint Temperature Schedule Name
-    TSetCoo;                 !- Cooling Setpoint Temperature Schedule Name
+    TSetHea,               !- Heating Setpoint Temperature Schedule Name
+    TSetCoo;               !- Cooling Setpoint Temperature Schedule Name
 
   ZoneHVAC:EquipmentList,
     ZSF1Equipment,           !- Name
@@ -2932,7 +2244,7 @@
     0.8,                     !- Rated Sensible Heat Ratio
     3.0,                     !- Rated COP {W/W}
     0.71,                    !- Rated Air Flow Rate {m3/s}
-    777.3,                   !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
+    ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
     Mixed Air 1 Node,        !- Air Inlet Node Name
     DX Cooling Coil 1 Outlet Node,  !- Air Outlet Node Name
     WindACCoolCapFT,         !- Total Cooling Capacity Function of Temperature Curve Name
@@ -2948,7 +2260,7 @@
     0.8,                     !- Rated Sensible Heat Ratio
     3.0,                     !- Rated COP {W/W}
     0.67,                    !- Rated Air Flow Rate {m3/s}
-    777.3,                   !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
+    ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
     Mixed Air 2 Node,        !- Air Inlet Node Name
     DX Cooling Coil 2 Outlet Node,  !- Air Outlet Node Name
     WindACCoolCapFT,         !- Total Cooling Capacity Function of Temperature Curve Name
@@ -2964,7 +2276,7 @@
     0.8,                     !- Rated Sensible Heat Ratio
     3.0,                     !- Rated COP {W/W}
     0.79,                    !- Rated Air Flow Rate {m3/s}
-    777.3,                   !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
+    ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
     Mixed Air 3 Node,        !- Air Inlet Node Name
     DX Cooling Coil 3 Outlet Node,  !- Air Outlet Node Name
     WindACCoolCapFT,         !- Total Cooling Capacity Function of Temperature Curve Name
@@ -2980,7 +2292,7 @@
     0.8,                     !- Rated Sensible Heat Ratio
     3.0,                     !- Rated COP {W/W}
     0.75,                    !- Rated Air Flow Rate {m3/s}
-    777.3,                   !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
+    ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
     Mixed Air 4 Node,        !- Air Inlet Node Name
     DX Cooling Coil 4 Outlet Node,  !- Air Outlet Node Name
     WindACCoolCapFT,         !- Total Cooling Capacity Function of Temperature Curve Name
@@ -3181,82 +2493,100 @@
     Air Loop 4 Outlet Node,  !- Fan Outlet Node Name
     Mixed Air 4 Nodes;       !- Setpoint Node or NodeList Name
 
-  Output:Variable,*,Outdoor Dry Bulb,Hourly;
+  ! Cooling schedule. This schedule is set directly by the external interface.
+  ! During warm-up and system-sizing, it is fixed at 24 degC.
 
-  Output:Variable,*,Zone/Sys Sensible Heating Rate,Hourly;
+  ExternalInterface:Schedule,
+    TSetCoo,                 !- Name
+    Temperature,             !- Schedule Type Limits Name
+    24;                      !- Initial Value
 
-  Output:Variable,*,Zone/Sys Air Temperature,TimeStep;
+  ! Heating schedule. This schedule is set directly by the external interface.
+  ! During warm-up and system-sizing, it is fixed at 20 degC.
 
-  Output:Variable,*,Zone Air Humidity Ratio,Hourly;
+  ExternalInterface:Schedule,
+    TSetHea,                 !- Name
+    Temperature,             !- Schedule Type Limits Name
+    20;                      !- Initial Value
 
-  Output:Variable,*,DXSystem Part-Load Ratio,Hourly;
-
-  Output:Variable,*,DX Coil Total Cooling Rate,Hourly;
-
-  Output:Variable,*,DX Coil Sensible Cooling Rate,Hourly;
-
-  Output:Variable,Main Heating Coil 1,Heating Coil Rate,Timestep;
-
-  Output:Variable,*,Zone/Sys Sensible Cooling Rate,TimeStep;
 
   Output:Variable,TSetHea,Schedule Value,TimeStep;
 
   Output:Variable,TSetCoo,Schedule Value,TimeStep;
+  
+  Output:Variable,*,Site Outdoor Air Drybulb Temperature,timestep;
 
-  Output:Meter,Cooling:Electricity,Monthly;
+  Output:Variable,*,Zone Air System Sensible Cooling Rate,timestep;
 
-  Output:Meter,Heating:Gas,Monthly;
+  Output:Variable,*,Zone Air System Sensible Heating Rate,timestep;
 
-  Output:Meter,Fans:Electricity,Monthly;
+  Output:Variable,*,Zone Air Temperature,timestep;
 
-  Output:Meter,HeatingCoils:EnergyTransfer,Monthly;
+  Output:Variable,*,Zone Air Humidity Ratio,timestep;
 
-  Output:Meter,CoolingCoils:EnergyTransfer,Monthly;
+  Output:Variable,*,Coil System Part Load Ratio,timestep;
 
-  Output:Meter,InteriorLights:Electricity,Monthly;
+  Output:Variable,*,Cooling Coil Total Cooling Rate,timestep;
 
-  Output:Meter,InteriorEquipment:Electricity,Monthly;
+  Output:Variable,*,Cooling Coil Sensible Cooling Rate,timestep;
 
-  Output:Meter,Cooling:Electricity,RunPeriod;
+  Output:Variable,*,Heating Coil Air Heating Rate,timestep;
 
-  Output:Meter,Heating:Gas,RunPeriod;
+  Output:Meter,Cooling:Electricity,monthly;
 
-  Output:Meter,Fans:Electricity,RunPeriod;
+  Output:Meter,Heating:Gas,monthly;
 
-  Output:Meter,HeatingCoils:EnergyTransfer,RunPeriod;
+  Output:Meter,Fans:Electricity,monthly;
 
-  Output:Meter,CoolingCoils:EnergyTransfer,RunPeriod;
+  Output:Meter,HeatingCoils:EnergyTransfer,monthly;
 
-  Output:Meter,InteriorLights:Electricity,RunPeriod;
+  Output:Meter,CoolingCoils:EnergyTransfer,monthly;
 
-  Output:Meter,InteriorEquipment:Electricity,RunPeriod;
+  Output:Meter,InteriorLights:Electricity,monthly;
+
+  Output:Meter,InteriorEquipment:Electricity,monthly;
+
+  Output:Meter,Cooling:Electricity,runperiod;
+
+  Output:Meter,Heating:Gas,runperiod;
+
+  Output:Meter,Fans:Electricity,runperiod;
+
+  Output:Meter,HeatingCoils:EnergyTransfer,runperiod;
+
+  Output:Meter,CoolingCoils:EnergyTransfer,runperiod;
+
+  Output:Meter,InteriorLights:Electricity,runperiod;
+
+  Output:Meter,InteriorEquipment:Electricity,runperiod;
 
   Output:VariableDictionary,Regular;
 
   Output:Surfaces:Drawing,dxf;
 
-  Output:Meter:MeterFileOnly,Electricity:Facility,Monthly;
+  Output:Meter:MeterFileOnly,Electricity:Facility,monthly;
 
-  Output:Meter:MeterFileOnly,Electricity:Building,Monthly;
+  Output:Meter:MeterFileOnly,Electricity:Building,monthly;
 
-  Output:Meter:MeterFileOnly,Electricity:HVAC,Monthly;
+  Output:Meter:MeterFileOnly,Electricity:HVAC,monthly;
 
-  Output:Meter:MeterFileOnly,Gas:Facility,Monthly;
+  Output:Meter:MeterFileOnly,Gas:Facility,monthly;
 
-  Output:Meter:MeterFileOnly,Gas:HVAC,Monthly;
+  Output:Meter:MeterFileOnly,Gas:HVAC,monthly;
 
-  Output:Meter:MeterFileOnly,Electricity:Facility,RunPeriod;
+  Output:Meter:MeterFileOnly,Electricity:Facility,runperiod;
 
-  Output:Meter:MeterFileOnly,Electricity:Building,RunPeriod;
+  Output:Meter:MeterFileOnly,Electricity:Building,runperiod;
 
-  Output:Meter:MeterFileOnly,Electricity:HVAC,RunPeriod;
+  Output:Meter:MeterFileOnly,Electricity:HVAC,runperiod;
 
-  Output:Meter:MeterFileOnly,Gas:Facility,RunPeriod;
+  Output:Meter:MeterFileOnly,Gas:Facility,runperiod;
 
-  Output:Meter:MeterFileOnly,Gas:HVAC,RunPeriod;
+  Output:Meter:MeterFileOnly,Gas:HVAC,runperiod;
 
-  Output:EnergyManagementSystem,
-    Verbose,                 !- Actuator Availability Dictionary Reporting
-    Verbose,                 !- Internal Variable Availability Dictionary Reporting
-    Verbose;                 !- EMS Runtime Language Debug Output Level
+  OutputControl:Table:Style,
+    Comma;                   !- Column Separator
+
+  Output:Table:SummaryReports,
+    AllSummary;              !- Report 1 Name
 
