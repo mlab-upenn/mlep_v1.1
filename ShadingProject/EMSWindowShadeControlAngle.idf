@@ -1329,7 +1329,7 @@
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLE ===========
 
-  Output:Variable,*,Outdoor Dry Bulb,timestep;
+  Output:Variable,*,Site Outdoor Air Drybulb Temperature,timestep;
 
   Output:Variable,*,Zone Mean Air Temperature,timestep;
 
@@ -1337,25 +1337,25 @@
 
   Output:Variable,ZN001:WALL001:WIN001,Surface Outside Face Incident Solar Radiation Rate per Area,timestep;
 
-  Output:Variable,*,Fraction of Time Shading Device Is On,timestep;
+  Output:Variable,*,Surface Shading Device Is On Time Fraction,timestep;
 
-  Output:Variable,*,Window Blind Slat Angle,timestep;
+  Output:Variable,*,Surface Window Blind Slat Angle,timestep;
 
-  Output:Variable,*,Window Transmitted Solar,timestep;
+  Output:Variable,*,Surface Window Transmitted Solar Radiation Rate,timestep;
 
-  Output:Variable,*,Window Solar Absorbed:All Glass Layers,timestep;
+  !Output:Variable,*,Window Solar Absorbed:All Glass Layers,timestep;
 
-  Output:Variable,*,Window Heat Gain,timestep;
+  Output:Variable,*,Zone Windows Total Heat Gain Rate,timestep;
 
-  Output:Variable,*,Window Heat Loss,timestep;
+  Output:Variable,*,Zone Windows Total Heat Loss Rate,timestep;
 
-  Output:Variable,*,Window Solar Absorbed:Shading Device,timestep;
+  !Output:Variable,*,Window Solar Absorbed:Shading Device,timestep;
 
-  Output:Variable,*,Window System Solar Transmittance,timestep;
+  Output:Variable,*,Surface Window System Solar Transmittance,timestep;
 
-  Output:Variable,*,Window System Solar Reflectance,timestep;
+  Output:Variable,*,Surface Window System Solar Absorptance,timestep;
 
-  Output:Variable,*,Window System Solar Absorptance,timestep;
+  Output:Variable,*,Surface Window System Solar Reflectance,timestep;
 
   Output:Variable,WEST ZONE,Zone Air System Sensible Cooling Rate,timestep;
 
@@ -1365,7 +1365,7 @@
 
   Output:Variable,*,Zone Air Humidity Ratio,timestep;
 
-  Output:Variable,*,FangerPMV,timestep;
+  Output:Variable,*,Zone Thermal Comfort Fanger Model PMV,timestep;
 
   Output:Variable,Shade_Angle_Schedule,Schedule Value,TimeStep;
 
