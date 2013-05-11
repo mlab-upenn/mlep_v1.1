@@ -2,7 +2,7 @@ function installMlep()
 %% Manual Install
 % 1 = Install Manually
 % 0 = Install through GUI
-manualInstall = 1;
+manualInstall = 0;
 
 % Paths
 if ispc
