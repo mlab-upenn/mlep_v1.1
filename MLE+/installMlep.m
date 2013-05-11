@@ -2,16 +2,16 @@ function installMlep()
 %% Manual Install
 % 1 = Install Manually
 % 0 = Install through GUI
-manualInstall = 0;
+manualInstall = 1;
 
 % Paths
 if ispc
     % Windows
-    eplusPath = 'C:\EnergyPlus-7-2-0\';
-    javaPath = 'C:\Program Files\Java\jre1.6.0_22\bin\';
+    eplusPath = 'C:\EnergyPlusV8-0-0\';
+    javaPath = 'C:\Program Files\Java\jre7\bin\';
 else
     % Unix
-    eplusPath = '/Applications/EnergyPlus-7-2-0/';
+    eplusPath = '/Applications/EnergyPlus-8-0-0/';
 end
 
 %% MLEP PATH
@@ -56,16 +56,25 @@ if ~manualInstall
         % UNIX
         installationUnix;
     end
-else
+else % Manual Install
     %Select EnergyPlus Directory
     currPath = mfilename('fullpath');
     % Remove prefix
-    indexHome = strfind(currPath, 'installFunction');
+    indexHome = strfind(currPath, 'installMlep');
     currPath = currPath(1:indexHome-1);
     % Save paths into mat files
     if ispc
         save([currPath 'gui' filesep 'eplusPath.mat'],'eplusPath');
         save([currPath 'gui' filesep 'javaPath.mat'],'javaPath');
+        % Replaced RunEPlus.bat
+        [status,message,messageid] = copyfile([mlepFolder 'gui' filesep 'RunEPlus.bat'] ,[eplusPath 'RunEPlus.bat'], 'f');
+        if ~status
+            disp('ERROR: CHECK E+ PATHS AND JAVA PATHS');
+            disp(message);
+            disp(messageid);
+        else
+            disp('INSTALLATION COMPLETED');
+        end
     else
         save([currPath 'gui' filesep 'eplusPath.mat'],'eplusPath');
     end

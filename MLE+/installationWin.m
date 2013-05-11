@@ -118,11 +118,6 @@ if isfield(handles.data,'eplusPathCheck')
             if status == 1
                 set(handles.replaceEplus, 'Background', 'g');
             end
-        else
-            [status,message,messageid] = copyfile([handles.data.homePath 'gui' filesep 'runenergyplus'] ,[handles.data.eplusPath filesep 'bin'], 'f');
-            if status == 1
-                set(handles.replaceEplus, 'Background', 'g');
-            end
         end    
     end
 end
