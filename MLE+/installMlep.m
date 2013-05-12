@@ -21,11 +21,6 @@ indexHome = strfind(mlepFolder, ['installMlep']);
 mlepFolder = mlepFolder(1:indexHome-1);
 cd(mlepFolder);
 
-%% Folders
-EplusFolder = 'EnergyPlusV7-2-0';
-JavaFolder = 'Java';
-BcvtbFolder = 'bcvtb';
-
 %% VERSION PATH
 addpath([pwd filesep 'gui' filesep 'version']);
 
