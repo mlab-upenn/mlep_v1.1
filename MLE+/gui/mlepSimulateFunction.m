@@ -24,6 +24,11 @@ guidata(handle, mlep);
 end
 
 function [mlep] = runSimulation(mlep)
+% Change Button color
+set(mlep.simulateRun, 'Background', mlep.background);
+set(mlep.simulateListbox,'string','');
+ 
+
 % Switch to Project Path
 cd(mlep.data.projectPath);
 mlep.data.sysID = 0;
@@ -69,6 +74,7 @@ if exist(pathOutput,'file')
     for i = 1:size( mlep.data.inputFieldNames,2)
         mlep.data.simulateListboxText{i+last} = mlep.data.inputFieldNames{i};
         mlep.data.varsData(:,i+last) = mlep.data.mlepIn.(mlep.data.inputFieldNames{i})(1:size(mlep.data.varsData,1))';
+        mlep.data.vars(i+last).object = mlep.data.inputFieldNames(i);
     end 
     
     if isempty(i)
@@ -81,6 +87,7 @@ if exist(pathOutput,'file')
     for i = 1:size( mlep.data.outputFieldNames,1)
         mlep.data.simulateListboxText{i+last} = mlep.data.outputFieldNames{i};
         mlep.data.varsData(:,i+last) = mlep.data.mlepOut.(mlep.data.outputFieldNames{i})(1:size(mlep.data.varsData,1))';
+        mlep.data.vars(i+last).object = mlep.data.outputFieldNames(i);
     end
     
     
@@ -98,6 +105,9 @@ else
 end
 
 [mlep] = mlepDisplayDxf(mlep);
+
+% Change Button color
+set(mlep.simulateRun, 'Background', 'g');
 end
 
 function [mlep] = mlepDisplayDxf(mlep)
@@ -195,8 +205,10 @@ mlep.data.simulateListboxIndex = get(mlep.simulateListbox,'Value');
 if (~ischar(FileName) || ~ischar(PathName))
     return;
 else
-    result = mlep.data.varsData(:,mlep.data.simulateListboxIndex);
-    save([PathName FileName], 'result');
+    data = struct();
+    data.result = mlep.data.varsData(:,mlep.data.simulateListboxIndex);
+    data.name = mlep.data.vars(mlep.data.simulateListboxIndex);
+    save([PathName FileName], 'data');
     disp(['Saved Result in ' PathName FileName] );
 end
 end
@@ -208,8 +220,10 @@ function [mlep] = saveAllResult(mlep)
 if (~ischar(FileName) || ~ischar(PathName))
     return;
 else
-    result = mlep.data.varsData(:,:);
-    save([PathName FileName], 'result');
+    data = struct();
+    data.result = mlep.data.varsData(:,:);
+    data.name = mlep.data.vars(:);
+    save([PathName FileName], 'data');
     disp(['Saved All Result in ' PathName FileName] );
 end
 end
