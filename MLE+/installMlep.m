@@ -2,12 +2,12 @@ function installMlep()
 %% Manual Install
 % 1 = Install Manually
 % 0 = Install through GUI
-manualInstall = 0;
+manualInstall = 1;
 
 % Paths
 if ispc
     % Windows
-    eplusPath = 'C:\EnergyPlusV8-0-0\';
+    eplusPath = 'C:\EnergyPlusV8-0-0';
     javaPath = 'C:\Program Files\Java\jre7\bin\';
 else
     % Unix
