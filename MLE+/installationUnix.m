@@ -22,7 +22,7 @@ function varargout = installationUnix(varargin)
 
 % Edit the above text to modify the response to help installationUnix
 
-% Last Modified by GUIDE v2.5 03-May-2013 15:04:34
+% Last Modified by GUIDE v2.5 03-Jun-2013 22:29:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -185,5 +185,3 @@ function DoneButton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 % Close GUI
 delete(gcf);
-
-

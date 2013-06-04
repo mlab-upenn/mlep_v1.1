@@ -11,7 +11,7 @@ if ispc
     javaPath = 'C:\Program Files\Java\jre7\bin\';
 else
     % Unix
-    eplusPath = '/Applications/EnergyPlus-8-0-0/';
+    eplusPath = '/Applications/EnergyPlus-8-0-0';
 end
 
 %% MLEP PATH
@@ -59,10 +59,14 @@ else % Manual Install
     currPath = currPath(1:indexHome-1);
     % Save paths into mat files
     if ispc
+        % Remove last filesep
+        if eplusPath(end) == filesep
+            eplusPath = eplusPath(1:end-1);
+        end
         save([currPath 'gui' filesep 'eplusPath.mat'],'eplusPath');
         save([currPath 'gui' filesep 'javaPath.mat'],'javaPath');
         % Replaced RunEPlus.bat
-        [status,message,messageid] = copyfile([mlepFolder 'gui' filesep 'RunEPlus.bat'] ,[eplusPath 'RunEPlus.bat'], 'f');
+        [status,message,messageid] = copyfile([mlepFolder 'gui' filesep 'RunEPlus.bat'] ,[eplusPath filesep 'RunEPlus.bat'], 'f');
         if ~status
             disp('ERROR: CHECK E+ PATHS AND JAVA PATHS');
             disp(message);

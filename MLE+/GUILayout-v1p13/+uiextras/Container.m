@@ -338,11 +338,18 @@ classdef Container < hgsetget
             oldunits = get( child, 'Units' );
             if strcmpi( oldunits, 'Pixels' )
                 set( child, propname, position );
+                 
+               
             else
                 % Other units, so switch to pixels before setting
+                if sum(isnan(position))
+                    % position error - NaN
+                else
+                   
                 set( child, 'Units', 'pixels' );
                 set( child, propname, position );
                 set( child, 'Units', oldunits );
+                end
             end
         end % repositionChild
         
