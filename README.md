@@ -22,7 +22,7 @@ Quick start
 -----------
 
 
-Clone the repo, `git clone git://github.com/mlab/mlep.git`, or [download the latest release](https://github.com/mlab/mlep/zipball/master).
+Clone the repo, `git clone git://github.com/mlab/mlep_v1.1.git`, or [download the latest release](https://github.com/mlab/mlep_v1.1/zipball/master).
 The distribution contains a tutorial that walks you through the installation and gets you started using MLE+. 
 
 
