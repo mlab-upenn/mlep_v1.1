@@ -1,4 +1,15 @@
 function installMlep()
+% INSTALLMLEP code to install MLE+
+%      Run this script before using MLE+.
+%
+%      installMlep() does not return anything. 
+%
+%      In installMlep you need to spedicy whether you want to use the GUI
+%      mode or the Manual mode. Set manualInstall = 0 if you do not want to
+%      use the GUI. 
+
+% Last Modified by Willy Bernal willyg@seas.upenn.edu 30-Jul-2013 16:29:59
+
 %% Manual Install
 % 1 = Install Manually
 % 0 = Install through GUI
