@@ -22,7 +22,7 @@ function varargout = installationWin(varargin)
 
 % Edit the above text to modify the response to help installationWin
 
-% Last Modified by GUIDE v2.5 18-Mar-2013 14:27:22
+% Last Modified by GUIDE v2.5 30-Jul-2013 16:29:59
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -144,6 +144,7 @@ if ischar(javaPath)
     indexHome = strfind(currPath, 'installFunction');
     currPath = currPath(1:indexHome-1);
     save([currPath 'gui' filesep 'javaPath.mat'],'javaPath');
+    %saveMlepSettings();
 end
 guidata(hObject, handles);
 
@@ -195,7 +196,7 @@ if ischar(eplusPath)
     indexHome = strfind(currPath, 'installFunction');
     currPath = currPath(1:indexHome-1);
     save([currPath 'gui' filesep 'eplusPath.mat'],'eplusPath');
-    saveMlepSettings();
+    %saveMlepSettings();
 end
 % Update handles structure
 guidata(hObject, handles);
@@ -221,3 +222,17 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 guidata(hObject, handles);
+
+
+% --- Executes on button press in pushbutton4.
+function pushbutton4_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+saveMlepSettings();
+% Deleting Variable Figure 
+% if isfield(mlep,'variableHandle')
+% 	delete(mlep.variableHandle);
+% end
+% Deleting Main Figure
+delete(gcf);
