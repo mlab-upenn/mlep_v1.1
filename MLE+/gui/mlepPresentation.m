@@ -14,7 +14,13 @@ mlep.presentationPanel = uiextras.Panel( 'Parent', mlep.presentationTab, 'Border
             mlep.presentationIntroPanel = uiextras.Panel('Parent', mlep.presentationIntroTop, 'Padding', 10, 'BorderType', 'etchedin', 'BorderWidth', 1, 'Title', 'Workflow', 'FontSize', mlep.fontMedium ); %, 'Title', 'WORKFLOW' etchedin etchedout beveledin beveledout line  
                 % AXES / FIGURE
                 [mlep.workflow,map]=imread([mlep.homePath 'gui' filesep 'figs' filesep 'workflow2.png']);
-                mlep.workflow = imresize(mlep.workflow, 0.6);
+                
+                if exist('imresize')
+                    mlep.workflow = imresize(mlep.workflow, 0.65);
+                else
+                    mlep.workflow = imageresize(mlep.workflow, 0.65, 0.65);
+                end
+                
                 % FIGURE
                 uicontrol( 'CDATA', mlep.workflow, 'Parent', mlep.presentationIntroPanel, 'enable', 'inactive');
             % BOX FOR ENERGYPLUS/WEATHER
