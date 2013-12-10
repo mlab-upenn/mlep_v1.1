@@ -25,6 +25,7 @@ else
     eplusPath = '/Applications/EnergyPlus-8-0-0';
 end
 
+%%%%%%%%%%%%%%%%%%%%%% DO NOT MODIFY AFTER THIS %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% MLEP PATH
 mlepFolder = mfilename('fullpath');
 % Remove
